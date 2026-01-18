@@ -8,6 +8,6 @@ class MasterSeeder extends Seeder
 {
     public function run()
     {
-        $this->call('FirstSeeder');
+        $this->call('BaseSeeder');
     }
 }

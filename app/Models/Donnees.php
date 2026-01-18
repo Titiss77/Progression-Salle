@@ -13,18 +13,17 @@ class Donnees extends Model {
         $this->db = \Config\database::connect();
 	}
 
-	/**
-	 * Retourne les informations générales du blog
-	 *
-	 * @return nom du club, description, nombre de nageurs, nombre d'hommes, nombre de femmes sous la forme d'un tableau associatif
-	 */
-	function getFirst() {
-		$req = '
-		SELECT debut
-		FROM `first`
-		';
+	function getCategories() {
+		$req = 'SELECT id, libelle FROM `categorie`';
 		$rs = $this->db->query($req);
-		$general = $rs->getRowArray();
+		$general = $rs->getResultArray();
+		return $general;
+	}
+
+	function getExercices() {
+		$req = 'SELECT id, idCategorie, libelle, charge, nbSeries FROM `exercice`';
+		$rs = $this->db->query($req);
+		$general = $rs->getResultArray();
 		return $general;
 	}
 }
