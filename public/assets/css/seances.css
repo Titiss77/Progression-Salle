@@ -1,0 +1,42 @@
+/* =========================================
+   4. TABLEAUX (Style Bootstrap-like)
+   ========================================= */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+    background-color: var(--white);
+}
+
+/* En-têtes */
+.table th {
+    background-color: #e9ecef;
+    color: #495057;
+    font-weight: 600;
+    text-align: left;
+    padding: 12px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+/* Cellules */
+.table td {
+    padding: 12px;
+    vertical-align: middle;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Bordures (.table-bordered) */
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid var(--border-color);
+}
+
+/* Rayures (.table-striped) - Une ligne sur deux */
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Effet au survol */
+.table tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.05);
+}

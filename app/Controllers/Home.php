@@ -10,15 +10,12 @@ class Home extends BaseController
     {
         $this->donneesModel = new Donnees();
     }
-    
+
     public function index()
     {
-
         $data = [
             'cssPage' => 'accueil.css',
             'titrePage' => 'accueil',
-            'categories' => $this->donneesModel->getCategories(),
-            'exercices' => $this->donneesModel->getExercices(),
         ];
 
         return view('v_accueil', $data);
@@ -26,14 +23,24 @@ class Home extends BaseController
 
     public function general()
     {
-
         $data = [
             'cssPage' => 'general.css',
             'titrePage' => 'general',
-            'categories' => $this->donneesModel->getCategories(),
-            'exercices' => $this->donneesModel->getExercices(),
+            'categories' => $this->donneesModel->getLesCategories(),
+            'exercices' => $this->donneesModel->getLesExercices(),
         ];
 
         return view('v_general', $data);
+    }
+
+    public function seances()
+    {
+        $data = [
+            'cssPage' => 'seances.css',
+            'titrePage' => 'seances',
+            'seances' => $this->donneesModel->getLesSeances(),
+        ];
+
+        return view('v_seances', $data);
     }
 }

@@ -1,44 +1,4 @@
 /* =========================================
-   1. RESET & BASE
-   ========================================= */
-:root {
-    --primary-color: #007bff;
-    /* Bleu standard */
-    --text-color: #333;
-    --bg-color: #f4f6f9;
-    --white: #ffffff;
-    --border-color: #dee2e6;
-    --muted-color: #6c757d;
-}
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
-}
-
-/* =========================================
-   2. LAYOUT (site-container)
-   ========================================= */
-.site-container {
-    max-width: 900px;
-    margin: 40px auto;
-    /* Centré horizontalement */
-    background-color: var(--white);
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    /* Ombre légère */
-}
-
-/* =========================================
    3. TYPOGRAPHIE & CATEGORIES
    ========================================= */
 h2 {

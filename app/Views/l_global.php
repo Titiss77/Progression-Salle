@@ -2,6 +2,7 @@
 $menuItems = [
     '/' => 'Accueil',
     '/general' => 'Vue globale',
+    '/seances' => 'Toutes les séances',
 ];
 ?>
 <!DOCTYPE html>
