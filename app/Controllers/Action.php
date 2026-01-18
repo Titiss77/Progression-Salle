@@ -27,8 +27,7 @@ class Action extends BaseController
                     ->back()
                     ->with('erreur', 'Impossible de créer la séance.');
             }
-        }
-        else {
+        } else {
             return redirect()->to('seance/modification/' . $idCategorie);
         }
     }
@@ -111,7 +110,7 @@ class Action extends BaseController
             return redirect()->back()->with('erreur', 'Aucune performance saisie.');
         }
     }
-    
+
     public function ajouterExercice($idCategorie)
     {
         helper('form');
@@ -132,14 +131,14 @@ class Action extends BaseController
             'cssPage' => 'modification.css',
             'titrePage' => "Modifier l'exercice",
             'idCategorie' => $exercice['idCategorie'],
-            'exercice' => $exercice 
+            'exercice' => $exercice
         ];
         return view('v_exercice_saisie', $data);
     }
 
     public function sauvegarderExercice()
     {
-        $id = $this->request->getPost('id'); 
+        $id = $this->request->getPost('id');
         $idCategorie = $this->request->getPost('idCategorie');
 
         $data = [

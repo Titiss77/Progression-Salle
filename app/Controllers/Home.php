@@ -54,7 +54,7 @@ class Home extends BaseController
 
         $data = [
             'cssPage' => 'uneSeance.css',
-            'titrePage' => $seance[0]['titre'].' : '.$seance[0]['date'],
+            'titrePage' => $seance[0]['titre'] . ' : ' . $seance[0]['date'],
             'seance' => $seance,
         ];
 

@@ -72,8 +72,7 @@ class ActionInDB extends Model
 			$data['ordre'] = ($maxOrdre['ordre'] ?? 0) + 1;
 
 			return $this->db->table('exercice')->insert($data);
-		}
-		else {
+		} else {
 			$oldExo = $this->db->table('exercice')->where('id', $data['id'])->get()->getRowArray();
 
 			$this
@@ -121,7 +120,7 @@ class ActionInDB extends Model
 		} else {
 			$voisin = $builder
 				->where('ordre >', $ordreActuel)
-				->orderBy('ordre', 'ASC') 
+				->orderBy('ordre', 'ASC')
 				->limit(1)
 				->get()
 				->getRowArray();

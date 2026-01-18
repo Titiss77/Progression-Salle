@@ -39,19 +39,21 @@ class Donnees extends Model
 	}
 
 	public function getExercicesParCategorie($idCategorie)
-{
-    return $this->db->table('exercice')
-                    ->where('idCategorie', $idCategorie)
-                    ->where('estActif', 1)
-					->orderBy('ordre', 'ASC')
-                    ->get()
-                    ->getResultArray();
-}
+	{
+		return $this
+			->db
+			->table('exercice')
+			->where('idCategorie', $idCategorie)
+			->where('estActif', 1)
+			->orderBy('ordre', 'ASC')
+			->get()
+			->getResultArray();
+	}
 
 	public function getUnExercice($id)
-{
-    return $this->db->table('exercice')->where('id', $id)->get()->getRowArray();
-}
+	{
+		return $this->db->table('exercice')->where('id', $id)->get()->getRowArray();
+	}
 
 	function getLesSeances()
 	{

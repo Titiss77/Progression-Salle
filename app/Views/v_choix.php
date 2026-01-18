@@ -10,7 +10,7 @@
 <div class="menu-grid">
     <?php foreach ($categories as $categorie): ?>
 
-    <a href="<?= site_url($selection .'/' . $categorie['id']) ?>" class="action-card card-choice">
+    <a href="<?= site_url($selection . '/' . $categorie['id']) ?>" class="action-card card-choice">
         <div class="icon-wrapper">
             <i class="bi bi-lightning-charge-fill"></i>
         </div>
