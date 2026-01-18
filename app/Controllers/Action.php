@@ -111,6 +111,7 @@ class Action extends BaseController
             return redirect()->back()->with('erreur', 'Aucune performance saisie.');
         }
     }
+    
     public function ajouterExercice($idCategorie)
     {
         helper('form');
