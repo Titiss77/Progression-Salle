@@ -9,5 +9,6 @@ class MasterSeeder extends Seeder
     public function run()
     {
         $this->call('BaseSeeder');
+        $this->call('SeanceSeeder');
     }
 }
