@@ -43,4 +43,15 @@ class Home extends BaseController
 
         return view('v_seances', $data);
     }
+
+    public function detail($id) 
+    {
+        $data = [
+            'cssPage' => 'uneSeance.css',
+            'titrePage' => 'Nop',
+            'seance' => $this->donneesModel->getUneSeances($id),
+        ];
+
+        return view('v_seance_detail', $data);
+    }
 }

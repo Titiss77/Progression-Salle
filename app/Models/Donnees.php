@@ -33,8 +33,16 @@ class Donnees extends Model
 
 	function getLesSeances()
 	{
-		$req = 'SELECT libelle, date_seance FROM `seances` s JOIN categorie c ON s.idCategorie=c.id ORDER BY date_seance DESC';
+		$req = 'SELECT s.id, libelle, date_seance FROM `seances` s JOIN categorie c ON s.idCategorie=c.id ORDER BY date_seance DESC';
 		$rs = $this->db->query($req);
+		$general = $rs->getResultArray();
+		return $general;
+	}
+
+	function getUneSeances($id)
+	{
+		$req = "SELECT c.libelle AS titre, s.date_seance AS date, e.libelle, GROUP_CONCAT(p.reps ORDER BY p.numero_serie ASC SEPARATOR ', ') as liste_reps, GROUP_CONCAT(p.poids_effectif ORDER BY p.numero_serie ASC SEPARATOR ', ') as liste_poids FROM performances p JOIN exercice e ON p.idExercice = e.id JOIN seances s ON s.id=p.idSeance JOIN categorie c ON c.id=s.idCategorie WHERE p.idSeance = ? GROUP BY e.id, e.libelle ORDER BY e.id ASC";
+		$rs = $this->db->query($req, [$id]);
 		$general = $rs->getResultArray();
 		return $general;
 	}

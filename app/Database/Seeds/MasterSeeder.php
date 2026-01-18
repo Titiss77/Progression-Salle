@@ -10,5 +10,6 @@ class MasterSeeder extends Seeder
     {
         $this->call('BaseSeeder');
         $this->call('SeanceSeeder');
+        $this->call('PerformanceSeeder');
     }
 }

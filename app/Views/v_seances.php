@@ -15,7 +15,7 @@
             <?php foreach ($seances as $seance): ?>
             <tr>
                 <td>
-                    <strong><?= esc($seance['libelle']) ?></strong>
+                    <strong><?= anchor('seance/detail/'.esc($seance['id']), esc($seance['libelle'])); ?></strong>
                 </td>
 
                 <td>
