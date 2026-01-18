@@ -13,7 +13,7 @@ class CreateSeances extends Migration
             'id'          => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
             'idCategorie' => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'null' => true],
             'date_seance' => ['type' => 'DATE', 'null' => false], 
-            'statut' => ['type' => 'ENUM', 'constraint' => ['en_cours','fini'], 'default' => 'en_cours'],
+            'status' => ['type' => 'ENUM', 'constraint' => ['en_cours','fini'], 'default' => 'en_cours'],
         ]);
         
         $this->forge->addKey('id', true);

@@ -75,24 +75,23 @@ class Action extends BaseController
 
     public function enregistrer()
     {
-        // 1. Récupération des données brutes du formulaire
         $idSeance = $this->request->getPost('idSeance');
-        $perfs = $this->request->getPost('perfs');  // C'est notre grand tableau
+        $perfs = $this->request->getPost('perfs');
+        $action = $this->request->getPost('action');  // On récupère 'sauvegarder' ou 'terminer'
 
-        // Si le formulaire est vide (protection)
         if (!$perfs || !is_array($perfs)) {
             return redirect()->back()->with('erreur', 'Aucune donnée reçue.');
         }
 
-        $donneesAInserer = [];
+        // 1. Déterminer le statut selon le bouton cliqué
+        $nouveauStatut = ($action === 'terminer') ? 'fini' : 'en_cours';
 
-        // 2. Traitement des boucles imbriquées
-        // Boucle 1 : On parcourt chaque Exercice (ID 5, ID 8...)
+        // 2. Préparation des données
+        $donneesAInserer = [];
         foreach ($perfs as $idExercice => $series) {
-            // Boucle 2 : On parcourt chaque Série (1, 2, 3...)
             foreach ($series as $numSerie => $valeurs) {
-                // On vérifie que l'utilisateur a bien rentré des répétitions
-                // (Si le champ reps est vide, on n'enregistre pas cette ligne)
+                // On accepte d'enregistrer même si reps est vide pour un brouillon (optionnel)
+                // Mais gardons ton filtre !empty pour l'instant
                 if (!empty($valeurs['reps'])) {
                     $donneesAInserer[] = [
                         'idSeance' => $idSeance,
@@ -105,14 +104,28 @@ class Action extends BaseController
             }
         }
 
-        // 3. Appel au modèle pour tout insérer d'un coup
         if (!empty($donneesAInserer)) {
+            // A. IMPORTANT : On supprime les anciennes perfs de cette séance pour éviter les doublons
+            $this->actionInDB->nettoyerPerformances($idSeance);
+
+            // B. On insère les nouvelles données
             $this->actionInDB->ajouterPerformances($donneesAInserer);
 
-            // SUCCÈS : On redirige vers l'historique ou le récap
-            return redirect()
-                ->to('historique')
-                ->with('succes', 'Séance enregistrée avec succès !');
+            // C. On met à jour le statut de la séance (en_cours ou fini)
+            $this->actionInDB->updateStatusSeance($idSeance, $nouveauStatut);
+
+            // D. Redirection intelligente
+            if ($nouveauStatut === 'en_cours') {
+                // Si c'est une sauvegarde, on reste sur la page
+                return redirect()
+                    ->back()
+                    ->with('succes', 'Brouillon sauvegardé. Vous pouvez continuer.');
+            } else {
+                // Si c'est terminé, on va à l'historique
+                return redirect()
+                    ->to('historique')
+                    ->with('succes', 'Séance terminée et validée !');
+            }
         } else {
             return redirect()->back()->with('erreur', 'Aucune performance saisie.');
         }

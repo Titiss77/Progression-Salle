@@ -36,4 +36,22 @@ class ActionInDB extends Model
 		// insertBatch permet d'insérer un tableau de tableaux en une seule requête SQL
 		return $this->db->table('performances')->insertBatch($data);
 	}
+
+	// Dans App/Models/ActionInDB.php
+
+	public function updateStatusSeance($idSeance, $status)
+	{
+		return $this
+			->db
+			->table('seances')
+			->where('id', $idSeance)
+			->update(['status' => $status]);
+	}
+
+	// Optionnel mais recommandé : Nettoyer les anciennes perfs avant de sauvegarder
+	// (pour éviter les doublons si on clique 2 fois sur sauvegarder)
+	public function nettoyerPerformances($idSeance)
+	{
+		return $this->db->table('performances')->where('idSeance', $idSeance)->delete();
+	}
 }

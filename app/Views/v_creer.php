@@ -70,9 +70,15 @@
     <?php endforeach; ?>
 
     <div class="d-grid gap-2 mt-4 mb-5">
-        <button type="submit" class="btn btn-success btn-lg">
+
+        <button type="submit" name="action" value="sauvegarder" class="btn btn-warning btn-lg text-white">
+            <i class="bi bi-save"></i> Sauvegarder (Brouillon)
+        </button>
+
+        <button type="submit" name="action" value="terminer" class="btn btn-success btn-lg">
             <i class="bi bi-check-circle-fill"></i> Terminer la séance
         </button>
+
         <a href="<?= site_url('/') ?>" class="btn btn-outline-secondary">Annuler</a>
     </div>
 
