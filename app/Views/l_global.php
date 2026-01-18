@@ -21,7 +21,6 @@ $menuItems = [
 <body>
     <div class="site-container">
         <?php
-        // On récupère le chemin actuel (ex: "historique", "choix/1", "seance/detail/5")
         $uri = uri_string();
         ?>
 

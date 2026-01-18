@@ -10,7 +10,6 @@ class Donnees extends Model
 
 	function __construct()
 	{
-		// Call the Model constructor
 		parent::__construct();
 		$this->db = \Config\database::connect();
 	}
@@ -80,8 +79,6 @@ class Donnees extends Model
 			->getRowArray();
 	}
 
-	// Dans App/Models/Donnees.php
-
 	public function getPerformancesRealisees($idSeance)
 	{
 		$query = $this
@@ -90,9 +87,6 @@ class Donnees extends Model
 			->where('idSeance', $idSeance)
 			->get()
 			->getResultArray();
-
-		// On réorganise le tableau pour qu'il soit facile à lire dans la Vue
-		// Structure : [ ID_EXO => [ NUM_SERIE => [ 'reps'=>10, 'poids'=>60 ] ] ]
 		$perfsOrdonnees = [];
 
 		foreach ($query as $row) {

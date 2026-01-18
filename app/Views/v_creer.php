@@ -44,13 +44,10 @@
                 <?php for ($i = 1; $i <= $exercice['nbSeries']; $i++): ?>
 
                 <?php
-                // LOGIQUE DE RÉCUPÉRATION
-                // On vérifie si on a des données sauvegardées pour cet exo et cette série
                 $savedReps = '';
-                $savedPoids = $exercice['charge'];  // Par défaut, la charge théorique
+                $savedPoids = $exercice['charge'];
 
                 if (isset($savedPerfs[$exercice['id']][$i])) {
-                    // Si trouvé en base, on écrase les défauts
                     $savedReps = $savedPerfs[$exercice['id']][$i]['reps'];
                     $savedPoids = $savedPerfs[$exercice['id']][$i]['poids'];
                 }
