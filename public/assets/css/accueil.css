@@ -1,3 +1,69 @@
-h1 {
-    text-align: center;
+/* Grille pour les menus */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    /* Responsive auto */
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Style des cartes boutons */
+.action-card {
+    display: flex;
+    align-items: center;
+    padding: 25px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--white);
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Effet au survol : la carte monte légèrement */
+.action-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    color: var(--white);
+    /* Garde le texte blanc */
+}
+
+/* Couleurs des cartes */
+.card-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, #34495e 100%);
+}
+
+.card-secondary {
+    background: linear-gradient(135deg, var(--secondary) 0%, #2980b9 100%);
+}
+
+.card-tertiary {
+    background: linear-gradient(135deg, #16a085 0%, #1abc9c 100%);
+    /* Vert émeraude */
+}
+
+.card-quaternary {
+    background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+}
+
+/* Icônes */
+.icon-wrapper {
+    font-size: 2.5rem;
+    margin-right: 20px;
+    opacity: 0.9;
+}
+
+/* Textes */
+.text-wrapper h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.text-wrapper p {
+    margin: 0;
+    font-size: 0.85rem;
+    opacity: 0.8;
+    line-height: 1.3;
 }

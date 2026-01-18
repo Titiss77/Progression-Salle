@@ -3,6 +3,9 @@
 <?= $this->section('contenu') ?>
 
 <div class="site-container">
+    <div class="mt-4">
+        <a href="<?= site_url('/') ?>" class="btn btn-secondary">← Retour à l'accueil</a>
+    </div>
     <?php if (!empty($categories) && is_array($categories)): ?>
 
     <?php foreach ($categories as $categorie): ?>

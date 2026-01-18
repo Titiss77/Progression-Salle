@@ -21,16 +21,16 @@ class Home extends BaseController
         return view('v_accueil', $data);
     }
 
-    public function general()
+    public function seances()
     {
         $data = [
-            'cssPage' => 'general.css',
-            'titrePage' => 'general',
+            'cssPage' => 'seances.css',
+            'titrePage' => 'geseances',
             'categories' => $this->donneesModel->getLesCategories(),
             'exercices' => $this->donneesModel->getLesExercices(),
         ];
 
-        return view('v_general', $data);
+        return view('v_seances', $data);
     }
 
     public function historique()
@@ -44,7 +44,7 @@ class Home extends BaseController
         return view('v_historique', $data);
     }
 
-    public function detail($id) 
+    public function detail($id)
     {
         $data = [
             'cssPage' => 'uneSeance.css',
@@ -53,5 +53,26 @@ class Home extends BaseController
         ];
 
         return view('v_seance_detail', $data);
+    }
+
+    public function choix($selection, $idCategorie = null)
+    {
+        if ($selection == 1) {
+            $action = 'Créer';
+        } else {
+            $action = 'Modifier';
+        }
+
+        if ($idCategorie === null) {
+            $data = [
+                'cssPage' => 'Choix.css',
+                'titrePage' => $action . ' une séance',
+                'texte' => $action,
+                'selection' => $selection,
+                'categories' => $this->donneesModel->getLesCategories(),
+            ];
+
+            return view('v_choix', $data);
+        }
     }
 }

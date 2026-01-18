@@ -1,7 +1,7 @@
 <?php
 $menuItems = [
     '/' => 'Accueil',
-    '/general' => 'Les séances',
+    '/seances' => 'Les séances',
     '/historique' => 'Historique',
 ];
 ?>
@@ -19,7 +19,7 @@ $menuItems = [
 </head>
 
 <body>
-    <nav>
+    <!--<nav>
         <ul>
             <?php foreach ($menuItems as $url => $label): ?>
             <li>
@@ -27,10 +27,10 @@ $menuItems = [
             </li>
             <?php endforeach; ?>
         </ul>
-    </nav>
+        </nav>-->
 
     <?= $this->renderSection('contenu') ?>
-
+    <!--
     <footer id="piedBlog">
 
         <nav>
@@ -43,6 +43,7 @@ $menuItems = [
             </ul>
         </nav>
     </footer>
+    -->
 
 </body>
 

@@ -1,0 +1,24 @@
+/* Style du bouton retour simple */
+.btn-back {
+    text-decoration: none;
+    color: var(--primary);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s;
+}
+
+.btn-back:hover {
+    color: var(--secondary);
+}
+
+/* Nouvelle couleur pour les cartes de choix (Cyan / Teal) */
+.card-choice {
+    background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
+}
+
+/* Petit effet : changer la couleur au survol pour dynamiser */
+.card-choice:hover {
+    background: linear-gradient(135deg, #1dd1a1 0%, #10ac84 100%);
+}
