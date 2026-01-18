@@ -15,7 +15,7 @@ class Home extends BaseController
     {
         $data = [
             'cssPage' => 'accueil.css',
-            'titrePage' => 'accueil',
+            'titrePage' => 'Accueil',
         ];
 
         return view('v_accueil', $data);
@@ -25,7 +25,7 @@ class Home extends BaseController
     {
         $data = [
             'cssPage' => 'seances.css',
-            'titrePage' => 'geseances',
+            'titrePage' => 'Séances',
             'categories' => $this->donneesModel->getLesCategories(),
             'exercices' => $this->donneesModel->getLesExercices(),
         ];
@@ -37,7 +37,7 @@ class Home extends BaseController
     {
         $data = [
             'cssPage' => 'historique.css',
-            'titrePage' => 'historique',
+            'titrePage' => 'Historique',
             'seances' => $this->donneesModel->getLesSeances(),
         ];
 
@@ -46,10 +46,19 @@ class Home extends BaseController
 
     public function detail($id)
     {
+        // 1. On récupère les données UNE SEULE FOIS
+        $seance = $this->donneesModel->getUneSeances($id);
+
+        // 2. Sécurité : On vérifie si la séance existe
+        if (empty($seance)) {
+            return redirect()->to('/historique')->with('erreur', 'Séance introuvable.');
+        }
+
+        // 3. On prépare les données pour la vue
         $data = [
             'cssPage' => 'uneSeance.css',
-            'titrePage' => 'Nop',
-            'seance' => $this->donneesModel->getUneSeances($id),
+            'titrePage' => $seance[0]['titre'].' : '.$seance[0]['date'],
+            'seance' => $seance,
         ];
 
         return view('v_seance_detail', $data);
