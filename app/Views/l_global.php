@@ -19,31 +19,25 @@ $menuItems = [
 </head>
 
 <body>
-    <!--<nav>
-        <ul>
-            <?php foreach ($menuItems as $url => $label): ?>
-            <li>
-                <?= anchor($url, $label); ?>
-            </li>
-            <?php endforeach; ?>
-        </ul>
-        </nav>-->
+    <div class="site-container">
+        <?php
+        // On récupère le chemin actuel (ex: "historique", "choix/1", "seance/detail/5")
+        $uri = uri_string();
+        ?>
 
-    <?= $this->renderSection('contenu') ?>
-    <!--
-    <footer id="piedBlog">
+        <?php if ($uri !== '' && $uri !== '/' && strpos($uri, 'seance/detail') === false): ?>
 
-        <nav>
-            <ul>
-                <?php foreach ($menuItems as $url => $label): ?>
-                <li>
-                    <?= anchor($url, $label); ?>
-                </li>
-                <?php endforeach; ?>
-            </ul>
-        </nav>
-    </footer>
-    -->
+        <div class="d-flex align-items-center mb-4" style="padding: 20px 20px 0;">
+            <a href="<?= site_url('/') ?>" class="btn-back">
+                <i class="bi bi-arrow-left"></i> Retour à l'accueil
+            </a>
+        </div>
+
+        <?php endif; ?>
+
+        <?= $this->renderSection('contenu') ?>
+    </div>
+</body>
 
 </body>
 

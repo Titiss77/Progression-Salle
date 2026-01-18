@@ -9,5 +9,6 @@ $routes->get('historique', 'Home::historique');
 
 $routes->get('seance/detail/(:num)', 'Home::detail/$1');
 
-$routes->get('choix/(:num)', 'Home::choix/$1');
-$routes->get('choix/(:num)/(:num)', 'Mome::choix/$1/$2');
+$routes->get('(:num)', 'Home::choix/$1');
+
+$routes->get('(:num)/(:num)', 'Action::choix/$1/$2');

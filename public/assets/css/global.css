@@ -121,3 +121,33 @@ footer nav ul li a {
 footer nav ul li a:hover {
     color: var(--white);
 }
+
+/* =========================================
+   2. BOUTON RETOUR (.btn-back)
+   ========================================= */
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    /* Espace entre la flèche et le texte */
+    text-decoration: none;
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background-color: transparent;
+}
+
+.btn-back:hover {
+    color: var(--secondary);
+    background-color: rgba(0, 0, 0, 0.05);
+    /* Fond gris très léger */
+    transform: translateX(-5px);
+    /* Petite animation vers la gauche */
+}
+
+.btn-back i {
+    font-size: 1.2rem;
+}

@@ -23,6 +23,14 @@ class Donnees extends Model
 		return $general;
 	}
 
+	function getUneCategorie($idCategorie)
+	{
+		$req = 'SELECT id, libelle FROM `categorie` WHERE id=?';
+		$rs = $this->db->query($req, $idCategorie);
+		$general = $rs->getRowArray();
+		return $general;
+	}
+
 	function getLesExercices()
 	{
 		$req = 'SELECT id, idCategorie, libelle, charge, nbSeries FROM `exercice`';

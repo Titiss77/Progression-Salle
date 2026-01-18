@@ -65,7 +65,7 @@ class Home extends BaseController
 
         if ($idCategorie === null) {
             $data = [
-                'cssPage' => 'Choix.css',
+                'cssPage' => 'choix.css',
                 'titrePage' => $action . ' une séance',
                 'texte' => $action,
                 'selection' => $selection,
