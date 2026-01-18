@@ -1,8 +1,8 @@
 <?php
 $menuItems = [
     '/' => 'Accueil',
-    '/general' => 'Vue globale',
-    '/seances' => 'Toutes les séances',
+    '/general' => 'Les séances',
+    '/historique' => 'Historique',
 ];
 ?>
 <!DOCTYPE html>

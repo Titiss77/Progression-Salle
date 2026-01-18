@@ -3,6 +3,9 @@
 <?= $this->section('contenu') ?>
 
 <div class="site-container">
+    <div class="mt-4">
+        <a href="<?= site_url('historique') ?>" class="btn btn-secondary">← Retour à l'historique</a>
+    </div>
 
     <?php if (!empty($seance) && is_array($seance)): ?>
 
@@ -44,10 +47,6 @@
         Aucun exercice trouvé pour cette séance, ou la séance n'existe pas.
     </div>
     <?php endif; ?>
-
-    <div class="mt-4">
-        <a href="<?= site_url('seances') ?>" class="btn btn-secondary">← Retour à l'historique</a>
-    </div>
 
 </div>
 

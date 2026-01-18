@@ -33,15 +33,15 @@ class Home extends BaseController
         return view('v_general', $data);
     }
 
-    public function seances()
+    public function historique()
     {
         $data = [
-            'cssPage' => 'seances.css',
-            'titrePage' => 'seances',
+            'cssPage' => 'historique.css',
+            'titrePage' => 'historique',
             'seances' => $this->donneesModel->getLesSeances(),
         ];
 
-        return view('v_seances', $data);
+        return view('v_historique', $data);
     }
 
     public function detail($id) 

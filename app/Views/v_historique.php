@@ -7,8 +7,8 @@
     <table class="table table-striped table-bordered">
         <thead>
             <tr>
-                <th scope="col" style="width: 50%;">Séance</th>
-                <th scope="col">Date</th>
+                <th scope="col" style="width: 50%;">Séances</th>
+                <th scope="col">Dates</th>
             </tr>
         </thead>
         <tbody>
