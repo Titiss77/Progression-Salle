@@ -1,11 +1,150 @@
-/* =========================================
-   1. VARIABLES & RESET
-   ========================================= */
 :root {
-    --primary: #2c3e50;
-    --secondary: #3498db;
-    --text-dark: #333333;
-    --bg-light: #f4f6f9;
-    --white: #ffffff;
-    --transition: all 0.3s ease;
+    /* =========================================
+       1. PALETTE DE COULEURS (PRIMITIVES)
+       ========================================= */
+    /* Couleurs de marque */
+    --color-primary: #2c3e50;
+    /* Bleu Nuit (Texte, Titres) */
+    --color-primary-light: #34495e;
+    --color-secondary: #1abc9c;
+    /* Teal / Cyan (Action principale) */
+    --color-secondary-dark: #16a085;
+    /* Pour le dégradé */
+    --color-accent: #e67e22;
+    /* Orange (Actions secondaires) */
+
+    /* Couleurs Fonctionnelles (Alertes & État) */
+    --color-success: #27ae60;
+    /* Vert (Validé, Terminé) */
+    --color-warning: #f39c12;
+    /* Jaune (En cours, Brouillon) */
+    --color-danger: #c0392b;
+    /* Rouge (Erreur, Supprimer) */
+    --color-info: #3498db;
+    /* Bleu (Info) */
+    --color-light: #ecf0f1;
+    /* Gris très clair (Fonds) */
+    --color-dark: #2c3e50;
+    /* Sombre */
+
+    /* Neutres (Texte & Fonds) */
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --gray-100: #f8f9fa;
+    /* Fond de page léger */
+    --gray-200: #e9ecef;
+    /* Bordures */
+    --gray-300: #dee2e6;
+    --gray-400: #ced4da;
+    --gray-500: #adb5bd;
+    --gray-600: #6c757d;
+    /* Texte secondaire */
+    --gray-700: #495057;
+    --gray-800: #343a40;
+    /* Texte principal */
+    --gray-900: #212529;
+
+    /* =========================================
+       2. TYPOGRAPHIE
+       ========================================= */
+    --font-family-base: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    --font-family-heading: 'Segoe UI', system-ui, sans-serif;
+
+    /* Tailles de police (Échelle modulaire) */
+    --font-size-xs: 0.75rem;
+    /* 12px */
+    --font-size-sm: 0.875rem;
+    /* 14px */
+    --font-size-base: 1rem;
+    /* 16px */
+    --font-size-lg: 1.125rem;
+    /* 18px */
+    --font-size-xl: 1.25rem;
+    /* 20px */
+    --font-size-2xl: 1.5rem;
+    /* 24px */
+    --font-size-3xl: 1.875rem;
+    /* 30px */
+
+    /* Graisses */
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 700;
+
+    /* =========================================
+       3. ESPACEMENTS (SPACING SYSTEM)
+       ========================================= */
+    /* Basé sur 4px ou 0.25rem */
+    --spacing-xs: 0.25rem;
+    /* 4px */
+    --spacing-sm: 0.5rem;
+    /* 8px */
+    --spacing-md: 1rem;
+    /* 16px */
+    --spacing-lg: 1.5rem;
+    /* 24px */
+    --spacing-xl: 2rem;
+    /* 32px */
+    --spacing-xxl: 3rem;
+    /* 48px */
+
+    /* =========================================
+       4. BORDURES & RADIUS
+       ========================================= */
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    /* Boutons classiques */
+    --border-radius-lg: 15px;
+    /* Cartes */
+    --border-radius-pill: 50rem;
+    /* Badges */
+    --border-radius-circle: 50%;
+
+    --border-width: 1px;
+    --border-color: var(--gray-200);
+
+    /* =========================================
+       5. OMBRES (SHADOWS)
+       ========================================= */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 12px 20px rgba(0, 0, 0, 0.15);
+    /* Au survol des cartes */
+
+    /* =========================================
+       6. TRANSITIONS
+       ========================================= */
+    --transition-fast: 0.15s ease-in-out;
+    --transition-base: 0.3s ease-in-out;
+    --transition-slow: 0.5s ease;
+
+    /* =========================================
+       7. UI SPECIFIQUE (Variables Sémantiques)
+       ========================================= */
+    /* Arrière-plans */
+    --bg-body: var(--gray-100);
+    --bg-card: var(--color-white);
+    --bg-input: var(--color-white);
+
+    /* Textes */
+    --text-main: var(--color-primary);
+    --text-muted: var(--gray-600);
+    --text-inverse: var(--color-white);
+
+    /* Dégradés (Utilisés pour tes cartes "Créer") */
+    --gradient-teal: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%);
+    --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+
+    /* =========================================
+       8. Z-INDEX (Couches)
+       ========================================= */
+    --z-back: -1;
+    --z-normal: 1;
+    --z-sticky: 100;
+    /* En-têtes collants */
+    --z-dropdown: 1000;
+    --z-modal: 1050;
+    --z-toast: 1100;
+    /* Messages flash */
 }
