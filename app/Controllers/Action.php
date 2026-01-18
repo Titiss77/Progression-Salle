@@ -35,25 +35,25 @@ class Action extends BaseController
         }
     }
 
+    // Dans App/Controllers/Action.php
+
     public function creation($idSeance)
     {
         helper('form');
-        // 1. On récupère les infos de la séance (ID Categorie, Date...)
-        // ATTENTION : Il faut une méthode légère dans le modèle pour ça (voir plus bas)
-        $infoSeance = $this->donneesModel->getSimpleSeance($idSeance);
 
-        // 2. On extrait l'ID de la catégorie
+        // 1. Infos générales
+        $infoSeance = $this->donneesModel->getSimpleSeance($idSeance);
         $idCategorie = $infoSeance['idCategorie'];
 
+        // 2. Préparation des données pour la vue
         $data = [
             'cssPage' => 'creer.css',
-            'titrePage' => 'Nouvelle Séance',
-            // On récupère les infos de la catégorie
+            'titrePage' => 'Saisie de séance',
+            'seance' => $infoSeance,
             'categorie' => $this->donneesModel->getUneCategorie($idCategorie),
-            // On récupère la liste des exercices prévus pour cette catégorie
             'exercices' => $this->donneesModel->getExercicesParCategorie($idCategorie),
-            // On passe aussi l'info de la séance (pour avoir la date ou l'ID pour les formulaires)
-            'seance' => $infoSeance
+            // AJOUT : On récupère ce qui a déjà été sauvegardé (si ça existe)
+            'savedPerfs' => $this->donneesModel->getPerformancesRealisees($idSeance)
         ];
 
         return view('v_creer', $data);

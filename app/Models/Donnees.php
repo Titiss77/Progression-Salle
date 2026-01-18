@@ -72,4 +72,29 @@ class Donnees extends Model
 			->get()
 			->getRowArray();
 	}
+
+	// Dans App/Models/Donnees.php
+
+	public function getPerformancesRealisees($idSeance)
+	{
+		$query = $this
+			->db
+			->table('performances')
+			->where('idSeance', $idSeance)
+			->get()
+			->getResultArray();
+
+		// On réorganise le tableau pour qu'il soit facile à lire dans la Vue
+		// Structure : [ ID_EXO => [ NUM_SERIE => [ 'reps'=>10, 'poids'=>60 ] ] ]
+		$perfsOrdonnees = [];
+
+		foreach ($query as $row) {
+			$perfsOrdonnees[$row['idExercice']][$row['numero_serie']] = [
+				'reps' => $row['reps'],
+				'poids' => $row['poids_effectif']
+			];
+		}
+
+		return $perfsOrdonnees;
+	}
 }

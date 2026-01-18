@@ -44,6 +44,20 @@
                 </thead>
                 <tbody>
                     <?php for ($i = 1; $i <= $exercice['nbSeries']; $i++): ?>
+
+                    <?php
+                    // LOGIQUE DE RÉCUPÉRATION
+                    // On vérifie si on a des données sauvegardées pour cet exo et cette série
+                    $savedReps = '';
+                    $savedPoids = $exercice['charge'];  // Par défaut, la charge théorique
+
+                    if (isset($savedPerfs[$exercice['id']][$i])) {
+                        // Si trouvé en base, on écrase les défauts
+                        $savedReps = $savedPerfs[$exercice['id']][$i]['reps'];
+                        $savedPoids = $savedPerfs[$exercice['id']][$i]['poids'];
+                    }
+                    ?>
+
                     <tr>
                         <td class="text-center align-middle">
                             <strong>#<?= $i ?></strong>
@@ -52,13 +66,13 @@
                         <td>
                             <input type="number" class="form-control text-center"
                                 name="perfs[<?= $exercice['id'] ?>][<?= $i ?>][reps]" placeholder="0"
-                                inputmode="numeric">
+                                inputmode="numeric" value="<?= esc($savedReps) ?>">
                         </td>
 
                         <td>
                             <input type="number" class="form-control text-center"
-                                name="perfs[<?= $exercice['id'] ?>][<?= $i ?>][poids]"
-                                value="<?= esc($exercice['charge']) ?>" step="0.5" inputmode="decimal">
+                                name="perfs[<?= $exercice['id'] ?>][<?= $i ?>][poids]" step="0.5" inputmode="decimal"
+                                value="<?= esc($savedPoids) ?>">
                         </td>
                     </tr>
                     <?php endfor; ?>
