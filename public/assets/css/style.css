@@ -109,7 +109,6 @@ a:hover {
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: var(--spacing-lg);
     background: var(--color-white);
     border: 1px solid var(--gray-200);
     border-radius: var(--border-radius-lg);
@@ -201,6 +200,7 @@ a:hover {
     font-weight: var(--font-weight-medium);
     color: var(--gray-700);
     margin-bottom: var(--spacing-xs);
+    padding-left: var(--spacing-lg);
 }
 
 .form-control {
@@ -209,6 +209,7 @@ a:hover {
     border: 1px solid var(--gray-300);
     border-radius: var(--border-radius-md);
     transition: var(--transition-fast);
+    margin-bottom: var(--spacing-sm);
 }
 
 .form-control:focus {
@@ -277,6 +278,7 @@ td input.form-control {
     cursor: pointer;
     border-radius: var(--border-radius-md);
     transition: var(--transition-fast);
+    margin-bottom: var(--spacing-lg);
 }
 
 .btn-lg {
@@ -297,6 +299,7 @@ td input.form-control {
 .btn-secondary {
     background-color: var(--gray-200);
     color: var(--gray-800);
+    margin-left: var(--spacing-lg);
 }
 
 .btn-secondary:hover {
@@ -386,6 +389,8 @@ td input.form-control {
     background-color: #d4edda;
     color: #155724;
     border-color: #c3e6cb;
+    margin-left: var(--spacing-lg);
+    margin-right: var(--spacing-lg);
 }
 
 .alert-warning {
