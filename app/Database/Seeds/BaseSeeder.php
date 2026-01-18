@@ -14,23 +14,25 @@ class BaseSeeder extends Seeder
         $this->db->enableForeignKeyChecks();
 
         $donnees = [
-            'Pectoraux' => [
-                ['libelle' => 'Développé couché', 'charge' => 80.5, 'nbSeries' => 4],
-                ['libelle' => 'Écarté incliné', 'charge' => 22, 'nbSeries' => 3],
-                ['libelle' => 'Pompes lestées', 'charge' => 10, 'nbSeries' => 4],
+            'Upper' => [
+                ['libelle' => 'Développé couché', 'charge' => 65, 'nbSeries' => 3],
+                ['libelle' => 'Tirage vertical', 'charge' => 65, 'nbSeries' => 3],
+                ['libelle' => 'Développé incliné', 'charge' => 42.5, 'nbSeries' => 3],
+                ['libelle' => 'Extensions lombaires', 'charge' => 32.5, 'nbSeries' => 3],
+                ['libelle' => 'Elévations frontales', 'charge' => 12, 'nbSeries' => 3],
+                ['libelle' => 'Développé militaire', 'charge' => 12, 'nbSeries' => 3],
+                ['libelle' => 'Elévations penchées', 'charge' => 10, 'nbSeries' => 3],
+                ['libelle' => 'Extensions bras droits', 'charge' => 27.5, 'nbSeries' => 3],
+                ['libelle' => 'Curls biceps assis', 'charge' => 12, 'nbSeries' => 4],
+                ['libelle' => 'Curls marteau assis', 'charge' => 14, 'nbSeries' => 4],
+                ['libelle' => 'Extensions triceps bas', 'charge' => 22.5, 'nbSeries' => 4],
+                ['libelle' => 'Extensions triceps haut', 'charge' => 17.5, 'nbSeries' => 4],
             ],
-            'Dos' => [
-                ['libelle' => 'Traction', 'charge' => 0, 'nbSeries' => 5],
-                ['libelle' => 'Rowing barre', 'charge' => 60, 'nbSeries' => 4],
-            ],
-            'Jambes' => [
-                ['libelle' => 'Squat', 'charge' => 100, 'nbSeries' => 5],
-                ['libelle' => 'Presse à cuisses', 'charge' => 150, 'nbSeries' => 4],
-                ['libelle' => 'Leg Extension', 'charge' => 45, 'nbSeries' => 3],
-            ],
-            'Cardio' => [
-                ['libelle' => 'Tapis de course', 'charge' => null, 'nbSeries' => 1],
-                ['libelle' => 'Vélo elliptique', 'charge' => null, 'nbSeries' => 1],
+            'Lower' => [
+                ['libelle' => 'Squats à la barre', 'charge' => 65, 'nbSeries' => 4],
+                ['libelle' => 'Leg extensions', 'charge' => 60, 'nbSeries' => 4],
+                ['libelle' => 'RDL', 'charge' => 67.5, 'nbSeries' => 4],
+                ['libelle' => 'Extensions mollets', 'charge' => 130, 'nbSeries' => 4],
             ]
         ];
 
