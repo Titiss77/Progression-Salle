@@ -1,0 +1,129 @@
+/* =========================================
+   1. VARIABLES & RESET
+   ========================================= */
+:root {
+    --primary: #2c3e50;
+    /* Bleu nuit */
+    --secondary: #3498db;
+    /* Bleu clair */
+    --text-dark: #333333;
+    --bg-light: #f4f6f9;
+    --white: #ffffff;
+    --transition: all 0.3s ease;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text-dark);
+    background: var(--bg-light);
+    line-height: 1.6;
+    overflow-x: hidden;
+    user-select: none;
+}
+
+/* Conteneur principal utilisé dans tes vues (ex: v_accueil.php) */
+.site-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    min-height: 70vh;
+}
+
+img {
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* =========================================
+   2. NAVIGATION PRINCIPALE (HAUT)
+   ========================================= */
+nav {
+    background: var(--white);
+    padding: 10px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Centré comme demandé */
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: var(--transition);
+    padding: 8px 0;
+    position: relative;
+}
+
+/* Effet de soulignement au survol */
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--secondary);
+    transition: width 0.3s;
+}
+
+nav ul li a:hover::after {
+    width: 100%;
+}
+
+nav ul li a:hover {
+    color: var(--secondary);
+}
+
+/* =========================================
+   3. PIED DE PAGE (FOOTER)
+   ========================================= */
+footer {
+    background: var(--primary);
+    color: var(--white);
+    padding: 30px 20px;
+    margin-top: 80px;
+    border-top: 4px solid var(--secondary);
+    text-align: center;
+}
+
+/* Réinitialisation du style de la nav pour le footer */
+footer nav {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    position: static;
+    /* Annule le sticky du haut */
+}
+
+footer nav ul {
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+footer nav ul li a {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.8rem;
+}
+
+footer nav ul li a:hover {
+    color: var(--white);
+}

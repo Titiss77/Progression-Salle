@@ -23,4 +23,17 @@ class Home extends BaseController
 
         return view('v_accueil', $data);
     }
+
+    public function general()
+    {
+
+        $data = [
+            'cssPage' => 'general.css',
+            'titrePage' => 'general',
+            'categories' => $this->donneesModel->getCategories(),
+            'exercices' => $this->donneesModel->getExercices(),
+        ];
+
+        return view('v_general', $data);
+    }
 }
