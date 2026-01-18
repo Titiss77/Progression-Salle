@@ -39,13 +39,19 @@ class Donnees extends Model
 		return $general;
 	}
 
-	function getExercicesParCategorie($idCategorie)
-	{
-		$req = 'SELECT id, idCategorie, libelle, charge, nbSeries FROM `exercice` WHERE idCategorie=?';
-		$rs = $this->db->query($req, $idCategorie);
-		$general = $rs->getResultArray();
-		return $general;
-	}
+	public function getExercicesParCategorie($idCategorie)
+{
+    return $this->db->table('exercice')
+                    ->where('idCategorie', $idCategorie)
+                    ->where('estActif', 1) // AJOUT : On ne prend que les actifs
+                    ->get()
+                    ->getResultArray();
+}
+
+	public function getUnExercice($id)
+{
+    return $this->db->table('exercice')->where('id', $id)->get()->getRowArray();
+}
 
 	function getLesSeances()
 	{

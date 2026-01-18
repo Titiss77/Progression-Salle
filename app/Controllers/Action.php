@@ -130,4 +130,69 @@ class Action extends BaseController
             return redirect()->back()->with('erreur', 'Aucune performance saisie.');
         }
     }
+
+    // AFFICHER LE FORMULAIRE D'AJOUT
+    public function ajouterExercice($idCategorie)
+    {
+        helper('form');
+        $data = [
+            'cssPage'     => 'modification.css',
+            'titrePage'   => 'Ajouter un exercice',
+            'idCategorie' => $idCategorie,
+            // Pas de variable 'exercice' car c'est une création
+        ];
+        return view('v_exercice_saisie', $data);
+    }
+
+    // AFFICHER LE FORMULAIRE DE MODIFICATION
+    public function modifierExercice($idExercice)
+    {
+        helper('form');
+        // On récupère les infos de l'exercice
+        // (Il faudra ajouter cette fonction getUnExercice dans ton modèle Donnees)
+        $exercice = $this->donneesModel->getUnExercice($idExercice);
+
+        $data = [
+            'cssPage'     => 'modification.css',
+            'titrePage'   => 'Modifier l\'exercice',
+            'idCategorie' => $exercice['idCategorie'], // On le récupère pour le lien retour
+            'exercice'    => $exercice // On passe les données pour pré-remplir
+        ];
+        return view('v_exercice_saisie', $data);
+    }
+
+    // SAUVEGARDER (INSERT OU UPDATE)
+    public function sauvegarderExercice()
+    {
+        $id = $this->request->getPost('id'); // Vide si ajout, rempli si modif
+        $idCategorie = $this->request->getPost('idCategorie');
+
+        $data = [
+            'id'          => $id, // Si l'ID est présent, CodeIgniter fera un UPDATE, sinon un INSERT
+            'idCategorie' => $idCategorie,
+            'libelle'     => $this->request->getPost('libelle'),
+            'nbSeries'    => $this->request->getPost('nbSeries'),
+            'charge'      => $this->request->getPost('charge'),
+        ];
+
+        // On appelle le modèle d'écriture
+        $this->actionInDB->saveExercice($data);
+
+        return redirect()->to('seance/modification/' . $idCategorie)
+                         ->with('succes', 'Exercice enregistré avec succès.');
+    }
+
+    // SUPPRIMER
+    public function supprimerExercice($idExercice)
+    {
+        // 1. On récupère l'exercice avant de supprimer pour savoir où rediriger (quel idCategorie)
+        $exercice = $this->donneesModel->getUnExercice($idExercice);
+        $idCategorie = $exercice['idCategorie'];
+
+        // 2. On supprime
+        $this->actionInDB->deleteExercice($idExercice);
+
+        return redirect()->to('seance/modification/' . $idCategorie)
+                         ->with('succes', 'Exercice supprimé.');
+    }
 }
