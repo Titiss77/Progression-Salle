@@ -14,7 +14,6 @@ class Home extends BaseController
     public function index()
     {
         $data = [
-            'cssPage' => 'accueil.css',
             'titrePage' => 'Accueil',
         ];
 
@@ -24,7 +23,6 @@ class Home extends BaseController
     public function seances()
     {
         $data = [
-            'cssPage' => 'seances.css',
             'titrePage' => 'Séances',
             'categories' => $this->donneesModel->getLesCategories(),
             'exercices' => $this->donneesModel->getLesExercices(),
@@ -36,7 +34,6 @@ class Home extends BaseController
     public function historique()
     {
         $data = [
-            'cssPage' => 'historique.css',
             'titrePage' => 'Historique',
             'seances' => $this->donneesModel->getLesSeances(),
         ];
@@ -53,7 +50,6 @@ class Home extends BaseController
         }
 
         $data = [
-            'cssPage' => 'uneSeance.css',
             'titrePage' => $seance[0]['titre'] . ' : ' . $seance[0]['date'],
             'seance' => $seance,
         ];
@@ -71,7 +67,6 @@ class Home extends BaseController
 
         if ($idCategorie === null) {
             $data = [
-                'cssPage' => 'choix.css',
                 'titrePage' => $action . ' une séance',
                 'texte' => $action,
                 'selection' => $selection,

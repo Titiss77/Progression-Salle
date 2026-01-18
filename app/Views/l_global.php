@@ -14,8 +14,7 @@ $menuItems = [
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <title><?= $titrePage; ?></title>
     <link rel="stylesheet" href="<?= base_url('assets/css/root.css'); ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/global.css'); ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/' . $cssPage); ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/style.css'); ?>">
 </head>
 
 <body>
@@ -36,8 +35,6 @@ $menuItems = [
 
         <?= $this->renderSection('contenu') ?>
     </div>
-</body>
-
 </body>
 
 </html>

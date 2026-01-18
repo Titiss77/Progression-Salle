@@ -40,7 +40,6 @@ class Action extends BaseController
         $idCategorie = $infoSeance['idCategorie'];
 
         $data = [
-            'cssPage' => 'creer.css',
             'titrePage' => 'Saisie de séance',
             'seance' => $infoSeance,
             'categorie' => $this->donneesModel->getUneCategorie($idCategorie),
@@ -54,7 +53,6 @@ class Action extends BaseController
     public function modification($idCategorie)
     {
         $data = [
-            'cssPage' => 'modification.css',
             'titrePage' => 'Modifier le modèle',
             'categorie' => $this->donneesModel->getUneCategorie($idCategorie),
             'exercices' => $this->donneesModel->getExercicesParCategorie($idCategorie),
@@ -115,7 +113,6 @@ class Action extends BaseController
     {
         helper('form');
         $data = [
-            'cssPage' => 'modification.css',
             'titrePage' => 'Ajouter un exercice',
             'idCategorie' => $idCategorie,
         ];
@@ -128,7 +125,6 @@ class Action extends BaseController
         $exercice = $this->donneesModel->getUnExercice($idExercice);
 
         $data = [
-            'cssPage' => 'modification.css',
             'titrePage' => "Modifier l'exercice",
             'idCategorie' => $exercice['idCategorie'],
             'exercice' => $exercice

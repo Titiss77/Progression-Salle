@@ -1,0 +1,425 @@
+/* =========================================
+   GLOBAL.CSS - SÉANCES & MUSCULATION
+   Dépendances : root.css, Bootstrap 5 (Reboot/Grid)
+   ========================================= */
+
+/* -----------------------------------------------------------
+   1. RESET & BASE
+----------------------------------------------------------- */
+body {
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    font-family: var(--font-family-base);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-family-heading);
+    color: var(--color-primary);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-md);
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-secondary);
+    transition: var(--transition-fast);
+}
+
+a:hover {
+    color: var(--color-secondary-dark);
+}
+
+/* -----------------------------------------------------------
+   2. LAYOUT PRINCIPAL (.site-container)
+   Simule une vue "App mobile" centrée sur grand écran
+----------------------------------------------------------- */
+.site-container {
+    max-width: 600px;
+    /* Largeur idéale pour une "Web App" */
+    min-height: 100vh;
+    margin: 0 auto;
+    background-color: var(--bg-card);
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    padding-bottom: var(--spacing-xxl);
+    /* Espace pour le scroll */
+}
+
+/* Padding interne global pour le contenu */
+.site-container>*:not(.btn-back-wrapper) {
+    padding-left: var(--spacing-lg);
+    padding-right: var(--spacing-lg);
+}
+
+/* -----------------------------------------------------------
+   3. NAVIGATION & RETOUR
+----------------------------------------------------------- */
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    color: var(--text-muted);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius-pill);
+    background: var(--gray-100);
+    transition: var(--transition-base);
+}
+
+.btn-back:hover {
+    background: var(--gray-200);
+    color: var(--color-primary);
+    transform: translateX(-3px);
+}
+
+.btn-back i {
+    margin-right: var(--spacing-xs);
+}
+
+/* -----------------------------------------------------------
+   4. MENU D'ACCUEIL (GRID SYSTEM)
+   Utilisé dans v_accueil.php et v_choix.php
+----------------------------------------------------------- */
+.menu-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    /* 1 colonne sur mobile */
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+@media (min-width: 480px) {
+    .menu-grid {
+        grid-template-columns: 1fr 1fr;
+        /* 2 colonnes si écran plus large */
+    }
+}
+
+/* CARTE D'ACTION (Boutons géants) */
+.action-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--spacing-lg);
+    background: var(--color-white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-base);
+    color: var(--text-main);
+    height: 100%;
+    min-height: 180px;
+    /* Hauteur minimale confortable */
+}
+
+.action-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+    border-color: transparent;
+    color: var(--text-main);
+    /* Garder le texte lisible */
+}
+
+/* Gestion des couleurs spécifiques des cartes */
+.action-card.card-primary:hover {
+    border-top: 4px solid var(--color-secondary);
+}
+
+.action-card.card-secondary:hover {
+    border-top: 4px solid var(--color-primary);
+}
+
+.action-card.card-tertiary:hover {
+    border-top: 4px solid var(--color-accent);
+}
+
+/* WRAPPER D'ICÔNE (Cercle coloré) */
+.icon-wrapper {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--border-radius-circle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-md);
+    background: var(--gray-100);
+    color: var(--color-primary);
+    transition: var(--transition-base);
+}
+
+/* Couleurs des icônes selon le type de carte */
+.card-primary .icon-wrapper {
+    background: rgba(26, 188, 156, 0.1);
+    color: var(--color-secondary);
+}
+
+.card-secondary .icon-wrapper {
+    background: rgba(44, 62, 80, 0.1);
+    color: var(--color-primary);
+}
+
+.card-tertiary .icon-wrapper {
+    background: rgba(230, 126, 34, 0.1);
+    color: var(--color-accent);
+}
+
+.card-quaternary .icon-wrapper {
+    background: rgba(52, 152, 219, 0.1);
+    color: var(--color-info);
+}
+
+.action-card:hover .icon-wrapper {
+    transform: scale(1.1);
+}
+
+.text-wrapper h3 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-primary);
+}
+
+.text-wrapper p {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* -----------------------------------------------------------
+   5. FORMULAIRES & SAISIE (v_creer.php, v_exercice_saisie.php)
+----------------------------------------------------------- */
+.form-label {
+    font-weight: var(--font-weight-medium);
+    color: var(--gray-700);
+    margin-bottom: var(--spacing-xs);
+}
+
+.form-control {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-base);
+    border: 1px solid var(--gray-300);
+    border-radius: var(--border-radius-md);
+    transition: var(--transition-fast);
+}
+
+.form-control:focus {
+    border-color: var(--color-secondary);
+    box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.15);
+    /* Glow teal */
+    outline: none;
+}
+
+/* Inputs de performance (Reps/Poids) - Plus gros pour le mobile */
+td input.form-control {
+    font-size: var(--font-size-lg);
+    padding: var(--spacing-xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+}
+
+/* -----------------------------------------------------------
+   6. TABLEAUX & LISTES (v_historique.php, v_seances.php)
+----------------------------------------------------------- */
+.table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    margin-bottom: var(--spacing-lg);
+}
+
+.table thead th {
+    background-color: var(--gray-100);
+    color: var(--gray-700);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    font-size: var(--font-size-xs);
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid var(--gray-200);
+    padding: var(--spacing-sm);
+}
+
+.table tbody td {
+    vertical-align: middle;
+    padding: var(--spacing-md) var(--spacing-sm);
+    border-bottom: 1px solid var(--gray-200);
+    color: var(--gray-800);
+}
+
+/* Ligne active ou survol */
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.card .table {
+    margin-bottom: 0;
+    /* Enlever la marge si dans une card */
+}
+
+/* -----------------------------------------------------------
+   7. BOUTONS & ÉLÉMENTS UI
+----------------------------------------------------------- */
+.btn {
+    display: inline-block;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-family: var(--font-family-base);
+    font-weight: var(--font-weight-medium);
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    border-radius: var(--border-radius-md);
+    transition: var(--transition-fast);
+}
+
+.btn-lg {
+    padding: var(--spacing-md) var(--spacing-xl);
+    font-size: var(--font-size-lg);
+}
+
+/* Variantes basées sur les variables root */
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-light);
+}
+
+.btn-secondary {
+    background-color: var(--gray-200);
+    color: var(--gray-800);
+}
+
+.btn-secondary:hover {
+    background-color: var(--gray-300);
+}
+
+.btn-success {
+    background-color: var(--color-success);
+    color: var(--color-white);
+}
+
+.btn-warning {
+    background-color: var(--color-warning);
+    color: var(--color-white);
+}
+
+.btn-danger {
+    background-color: var(--color-danger);
+    color: var(--color-white);
+}
+
+/* BADGES */
+.badge {
+    display: inline-block;
+    padding: 0.35em 0.65em;
+    font-size: 0.75em;
+    font-weight: var(--font-weight-bold);
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: var(--border-radius-pill);
+}
+
+.bg-warning {
+    background-color: rgba(243, 156, 18, 0.2) !important;
+    color: #d35400;
+}
+
+.bg-success {
+    background-color: rgba(39, 174, 96, 0.2) !important;
+    color: #27ae60;
+}
+
+.bg-secondary {
+    background-color: var(--gray-200) !important;
+    color: var(--gray-700);
+}
+
+/* -----------------------------------------------------------
+   8. COMPOSANT SPECIFIQUE : CARD EXERCICE (v_creer.php)
+----------------------------------------------------------- */
+.card {
+    border: none;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    /* Pour que le header ne dépasse pas */
+    background-color: var(--bg-card);
+    margin-bottom: var(--spacing-lg);
+}
+
+.card-header {
+    background-color: var(--gray-100);
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.card-header h5 {
+    margin: 0;
+    font-size: var(--font-size-base);
+    color: var(--color-primary);
+    font-weight: var(--font-weight-bold);
+}
+
+/* -----------------------------------------------------------
+   9. UTILITAIRES & ALERTS
+----------------------------------------------------------- */
+.alert {
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    border-radius: var(--border-radius-md);
+    border: 1px solid transparent;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border-color: #ffeeba;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border-color: #bee5eb;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-end {
+    text-align: right;
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+.mb-4 {
+    margin-bottom: var(--spacing-lg) !important;
+}
+
+.d-grid {
+    display: grid;
+}
+
+.gap-2 {
+    gap: var(--spacing-sm);
+}
