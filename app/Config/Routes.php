@@ -14,3 +14,6 @@ $routes->get('(:num)/(:num)', 'Action::choix/$1/$2');
 
 $routes->get('seance/creation/(:num)', 'Action::creation/$1');
 $routes->get('seance/modification/(:num)', 'Action::modification/$1');
+
+// Route pour traiter le formulaire d'enregistrement
+$routes->post('seance/enregistrer', 'Action::enregistrer');

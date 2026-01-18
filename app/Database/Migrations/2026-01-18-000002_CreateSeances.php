@@ -12,9 +12,8 @@ class CreateSeances extends Migration
         $this->forge->addField([
             'id'          => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
             'idCategorie' => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'null' => true],
-            
-            // CORRECTION : Suppression de 'auto_increment' qui causait l'erreur
             'date_seance' => ['type' => 'DATE', 'null' => false], 
+            'statut' => ['type' => 'ENUM', 'constraint' => ['en_cours','fini'], 'default' => 'en_cours'],
         ]);
         
         $this->forge->addKey('id', true);

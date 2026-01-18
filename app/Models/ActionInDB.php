@@ -30,4 +30,10 @@ class ActionInDB extends Model
 		// Cela te permettra de rediriger l'utilisateur vers la page de cette séance précis
 		return $this->db->insertID();
 	}
+
+	public function ajouterPerformances($data)
+	{
+		// insertBatch permet d'insérer un tableau de tableaux en une seule requête SQL
+		return $this->db->table('performances')->insertBatch($data);
+	}
 }
