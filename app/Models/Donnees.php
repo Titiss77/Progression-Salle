@@ -57,7 +57,7 @@ class Donnees extends Model
 
 	function getLesSeances()
 	{
-		$req = 'SELECT s.id, libelle, date_seance, status FROM `seances` s JOIN categorie c ON s.idCategorie=c.id ORDER BY date_seance DESC';
+		$req = 'SELECT s.id, libelle, date_seance, status FROM `seances` s JOIN categorie c ON s.idCategorie=c.id ORDER BY date_seance DESC, id DESC';
 		$rs = $this->db->query($req);
 		$general = $rs->getResultArray();
 		return $general;
