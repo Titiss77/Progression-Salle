@@ -23,7 +23,8 @@ class CreateBase extends Migration
             'libelle'     => ['type' => 'VARCHAR', 'constraint' => 100, 'null' => false],
             'charge'      => ['type' => 'FLOAT', 'constraint' => 10, 'null' => true],
             'nbSeries'    => ['type' => 'INT', 'constraint' => 2, 'null' => true],
-            'estActif'    => ['type'=> 'INT', 'constraint' => 1, 'default' => 1]
+            'estActif'    => ['type'=> 'INT', 'constraint' => 1, 'default' => 1],
+            'ordre'       => ['type'=> 'INT', 'constraint' => 20, 'default' => 1],
         ]);
         
         $this->forge->addKey('id', true);

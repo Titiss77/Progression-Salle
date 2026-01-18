@@ -43,7 +43,8 @@ class Donnees extends Model
 {
     return $this->db->table('exercice')
                     ->where('idCategorie', $idCategorie)
-                    ->where('estActif', 1) // AJOUT : On ne prend que les actifs
+                    ->where('estActif', 1)
+					->orderBy('ordre', 'ASC')
                     ->get()
                     ->getResultArray();
 }

@@ -29,3 +29,6 @@ $routes->post('exercice/sauvegarder', 'Action::sauvegarderExercice');
 
 // Supprimer un exercice
 $routes->get('exercice/supprimer/(:num)', 'Action::supprimerExercice/$1');
+
+$routes->get('exercice/monter/(:num)', 'Action::monterExercice/$1');
+$routes->get('exercice/descendre/(:num)', 'Action::descendreExercice/$1');

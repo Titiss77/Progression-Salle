@@ -136,8 +136,8 @@ class Action extends BaseController
     {
         helper('form');
         $data = [
-            'cssPage'     => 'modification.css',
-            'titrePage'   => 'Ajouter un exercice',
+            'cssPage' => 'modification.css',
+            'titrePage' => 'Ajouter un exercice',
             'idCategorie' => $idCategorie,
             // Pas de variable 'exercice' car c'est une création
         ];
@@ -153,10 +153,10 @@ class Action extends BaseController
         $exercice = $this->donneesModel->getUnExercice($idExercice);
 
         $data = [
-            'cssPage'     => 'modification.css',
-            'titrePage'   => 'Modifier l\'exercice',
-            'idCategorie' => $exercice['idCategorie'], // On le récupère pour le lien retour
-            'exercice'    => $exercice // On passe les données pour pré-remplir
+            'cssPage' => 'modification.css',
+            'titrePage' => "Modifier l'exercice",
+            'idCategorie' => $exercice['idCategorie'],  // On le récupère pour le lien retour
+            'exercice' => $exercice  // On passe les données pour pré-remplir
         ];
         return view('v_exercice_saisie', $data);
     }
@@ -164,22 +164,23 @@ class Action extends BaseController
     // SAUVEGARDER (INSERT OU UPDATE)
     public function sauvegarderExercice()
     {
-        $id = $this->request->getPost('id'); // Vide si ajout, rempli si modif
+        $id = $this->request->getPost('id');  // Vide si ajout, rempli si modif
         $idCategorie = $this->request->getPost('idCategorie');
 
         $data = [
-            'id'          => $id, // Si l'ID est présent, CodeIgniter fera un UPDATE, sinon un INSERT
+            'id' => $id,  // Si l'ID est présent, CodeIgniter fera un UPDATE, sinon un INSERT
             'idCategorie' => $idCategorie,
-            'libelle'     => $this->request->getPost('libelle'),
-            'nbSeries'    => $this->request->getPost('nbSeries'),
-            'charge'      => $this->request->getPost('charge'),
+            'libelle' => $this->request->getPost('libelle'),
+            'nbSeries' => $this->request->getPost('nbSeries'),
+            'charge' => $this->request->getPost('charge'),
         ];
 
         // On appelle le modèle d'écriture
         $this->actionInDB->saveExercice($data);
 
-        return redirect()->to('seance/modification/' . $idCategorie)
-                         ->with('succes', 'Exercice enregistré avec succès.');
+        return redirect()
+            ->to('seance/modification/' . $idCategorie)
+            ->with('succes', 'Exercice enregistré avec succès.');
     }
 
     // SUPPRIMER
@@ -192,7 +193,26 @@ class Action extends BaseController
         // 2. On supprime
         $this->actionInDB->deleteExercice($idExercice);
 
-        return redirect()->to('seance/modification/' . $idCategorie)
-                         ->with('succes', 'Exercice supprimé.');
+        return redirect()
+            ->to('seance/modification/' . $idCategorie)
+            ->with('succes', 'Exercice supprimé.');
+    }
+
+    public function monterExercice($idExercice)
+    {
+        $this->actionInDB->changerOrdre($idExercice, 'monter');
+
+        // Redirection vers la liste (on doit retrouver l'ID Categorie)
+        // Astuce : On le récupère vite fait ou on le stocke avant
+        $ex = $this->donneesModel->getUnExercice($idExercice);
+        return redirect()->to('seance/modification/' . $ex['idCategorie']);
+    }
+
+    public function descendreExercice($idExercice)
+    {
+        $this->actionInDB->changerOrdre($idExercice, 'descendre');
+
+        $ex = $this->donneesModel->getUnExercice($idExercice);
+        return redirect()->to('seance/modification/' . $ex['idCategorie']);
     }
 }

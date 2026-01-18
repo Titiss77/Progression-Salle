@@ -67,33 +67,94 @@ class ActionInDB extends Model
 
 	public function saveExercice($data)
 	{
-		// CAS 1 : CRÉATION (Pas d'ID)
+		// CAS 1 : CRÉATION (Nouvel exercice)
 		if (empty($data['id'])) {
 			unset($data['id']);
-			$data['estActif'] = 1;  // Par défaut actif
+			$data['estActif'] = 1;
+
+			// Calcul du prochain numéro d'ordre pour cette catégorie
+			$maxOrdre = $this
+				->db
+				->table('exercice')
+				->where('idCategorie', $data['idCategorie'])
+				->where('estActif', 1)
+				->selectMax('ordre')
+				->get()
+				->getRowArray();
+
+			$data['ordre'] = ($maxOrdre['ordre'] ?? 0) + 1;
+
 			return $this->db->table('exercice')->insert($data);
 		}
-		// CAS 2 : MODIFICATION (Il y a un ID)
+		// CAS 2 : MODIFICATION (On crée une nouvelle version)
 		else {
-			// A. On archive l'ancienne version (Soft Delete)
-			// Les anciennes séances continueront de pointer vers cet ID archivé
+			// A. On récupère l'ANCIEN exercice pour connaître son ordre actuel
+			$oldExo = $this->db->table('exercice')->where('id', $data['id'])->get()->getRowArray();
+
+			// B. On archive l'ancien
 			$this
 				->db
 				->table('exercice')
 				->where('id', $data['id'])
 				->update(['estActif' => 0]);
 
-			// B. On crée une NOUVELLE ligne avec les nouvelles infos
-			// Les futures séances utiliseront ce nouvel ID
+			// C. On crée le NOUVEAU en copiant l'ordre de l'ancien
 			$nouvelExercice = [
 				'idCategorie' => $data['idCategorie'],
 				'libelle' => $data['libelle'],
 				'nbSeries' => $data['nbSeries'],
 				'charge' => $data['charge'],
-				'estActif' => 1
+				'estActif' => 1,
+				'ordre' => $oldExo['ordre']  // IMPORTANT : On garde la même position
 			];
 
 			return $this->db->table('exercice')->insert($nouvelExercice);
+		}
+	}
+
+	public function changerOrdre($idExercice, $direction)
+	{
+		// 1. Récupérer l'exercice à déplacer
+		$exercice = $this->db->table('exercice')->where('id', $idExercice)->get()->getRowArray();
+
+		if (!$exercice)
+			return;
+
+		$ordreActuel = $exercice['ordre'];
+		$idCategorie = $exercice['idCategorie'];
+
+		// 2. Trouver le voisin avec qui échanger
+		$builder = $this
+			->db
+			->table('exercice')
+			->where('idCategorie', $idCategorie)
+			->where('estActif', 1);
+
+		if ($direction === 'monter') {
+			// On cherche celui qui a un ordre juste INFÉRIEUR (ex: on est 5, on cherche le 4)
+			$voisin = $builder
+				->where('ordre <', $ordreActuel)
+				->orderBy('ordre', 'DESC')  // Le plus proche
+				->limit(1)
+				->get()
+				->getRowArray();
+		} else {
+			// On cherche celui qui a un ordre juste SUPÉRIEUR (ex: on est 5, on cherche le 6)
+			$voisin = $builder
+				->where('ordre >', $ordreActuel)
+				->orderBy('ordre', 'ASC')  // Le plus proche
+				->limit(1)
+				->get()
+				->getRowArray();
+		}
+
+		// 3. Echanger les ordres si un voisin existe
+		if ($voisin) {
+			// Update de l'exercice actuel avec l'ordre du voisin
+			$this->db->table('exercice')->where('id', $idExercice)->update(['ordre' => $voisin['ordre']]);
+
+			// Update du voisin avec l'ancien ordre de l'actuel
+			$this->db->table('exercice')->where('id', $voisin['id'])->update(['ordre' => $ordreActuel]);
 		}
 	}
 }
