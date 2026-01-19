@@ -12,6 +12,7 @@ class CreateBase extends Migration
         $this->forge->addField([
             'id'          => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
             'libelle'     => ['type' => 'VARCHAR', 'constraint' => 100, 'null' => false],
+            'estActif'    => ['type' => 'INT', 'constraint' => 1, 'null' => false, 'default' => 1],
         ]);
         $this->forge->addKey('id', true);
         $this->forge->createTable('programme');

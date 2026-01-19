@@ -20,17 +20,21 @@ class Donnees extends Model
 			->db
 			->table('programme')
 			->select('id, libelle')
+			->where('estActif', 1)
 			->get()
 			->getResultArray();
 	}
 
-	public function getUnProgramme($idProgramme)
+	/**
+	 * Cette méthode (utilisée pour l'historique) ne change pas
+	 * car elle doit pouvoir lire même les programmes archivés.
+	 */
+	public function getUnProgramme($id)
 	{
 		return $this
 			->db
 			->table('programme')
-			->select('id, libelle')
-			->where('id', $idProgramme)
+			->where('id', $id)
 			->get()
 			->getRowArray();
 	}
