@@ -8,34 +8,42 @@ class Donnees extends Model
 {
 	protected $db;
 
-	function __construct()
+	public function __construct()
 	{
 		parent::__construct();
-		$this->db = \Config\database::connect();
+		$this->db = \Config\Database::connect();
 	}
 
-	function getLesProgrammes()
+	public function getLesProgrammes()
 	{
-		$req = 'SELECT id, libelle FROM `programme`';
-		$rs = $this->db->query($req);
-		$general = $rs->getResultArray();
-		return $general;
+		return $this
+			->db
+			->table('programme')
+			->select('id, libelle')
+			->get()
+			->getResultArray();
 	}
 
-	function getUneProgramme($idProgramme)
+	public function getUneProgramme($idProgramme)
 	{
-		$req = 'SELECT id, libelle FROM `programme` WHERE id=?';
-		$rs = $this->db->query($req, $idProgramme);
-		$general = $rs->getRowArray();
-		return $general;
+		return $this
+			->db
+			->table('programme')
+			->select('id, libelle')
+			->where('id', $idProgramme)
+			->get()
+			->getRowArray();
 	}
 
-	function getLesExercices()
+	public function getLesExercices()
 	{
-		$req = 'SELECT id, idProgramme, libelle, charge, nbSeries FROM `exercice`';
-		$rs = $this->db->query($req);
-		$general = $rs->getResultArray();
-		return $general;
+		return $this
+			->db
+			->table('exercice')
+			->select('id, idProgramme, libelle, charge, nbSeries')
+			->orderBy('ordre', 'ASC')
+			->get()
+			->getResultArray();
 	}
 
 	public function getExercicesParProgramme($idProgramme)
@@ -52,23 +60,45 @@ class Donnees extends Model
 
 	public function getUnExercice($id)
 	{
-		return $this->db->table('exercice')->where('id', $id)->get()->getRowArray();
+		return $this
+			->db
+			->table('exercice')
+			->where('id', $id)
+			->get()
+			->getRowArray();
 	}
 
-	function getLesSeances()
+	public function getLesSeances()
 	{
-		$req = 'SELECT s.id, libelle, date_seance, status FROM `seances` s JOIN programme c ON s.idProgramme=c.id ORDER BY date_seance DESC, id DESC';
-		$rs = $this->db->query($req);
-		$general = $rs->getResultArray();
-		return $general;
+		return $this
+			->db
+			->table('seances s')
+			->select('s.id, c.libelle, s.date_seance, s.status')
+			->join('programme c', 's.idProgramme = c.id')
+			->orderBy('s.date_seance', 'DESC')
+			->orderBy('s.id', 'DESC')
+			->get()
+			->getResultArray();
 	}
 
-	function getUneSeances($id)
+	public function getUneSeances($id)
 	{
-		$req = "SELECT c.libelle AS titre, s.date_seance AS date, e.libelle, GROUP_CONCAT(p.reps ORDER BY p.numero_serie ASC SEPARATOR ', ') as liste_reps, GROUP_CONCAT(p.poids_effectif ORDER BY p.numero_serie ASC SEPARATOR ', ') as liste_poids FROM performances p JOIN exercice e ON p.idExercice = e.id JOIN seances s ON s.id=p.idSeance JOIN programme c ON c.id=s.idProgramme WHERE p.idSeance = ? GROUP BY e.id, e.libelle ORDER BY e.id ASC";
-		$rs = $this->db->query($req, [$id]);
-		$general = $rs->getResultArray();
-		return $general;
+		// Pour des requêtes complexes avec GROUP_CONCAT, le Query Builder est aussi possible
+		// et rend la lecture des JOIN plus claire.
+		return $this
+			->db
+			->table('performances p')
+			->select('c.libelle AS titre, s.date_seance AS date, e.libelle')
+			->select("GROUP_CONCAT(p.reps ORDER BY p.numero_serie ASC SEPARATOR ', ') as liste_reps")
+			->select("GROUP_CONCAT(p.poids_effectif ORDER BY p.numero_serie ASC SEPARATOR ', ') as liste_poids")
+			->join('exercice e', 'p.idExercice = e.id')
+			->join('seances s', 's.id = p.idSeance')
+			->join('programme c', 'c.id = s.idProgramme')
+			->where('p.idSeance', $id)
+			->groupBy('e.id, e.libelle')
+			->orderBy('e.id', 'ASC')
+			->get()
+			->getResultArray();
 	}
 
 	public function getSimpleSeance($idSeance)
@@ -89,6 +119,7 @@ class Donnees extends Model
 			->where('idSeance', $idSeance)
 			->get()
 			->getResultArray();
+
 		$perfsOrdonnees = [];
 
 		foreach ($query as $row) {

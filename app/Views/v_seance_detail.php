@@ -2,8 +2,10 @@
 
 <?= $this->section('contenu') ?>
 
-<div class="mt-4">
-    <a href="<?= site_url('historique') ?>" class="btn btn-secondary">← Retour à l'historique</a>
+<div class="d-flex align-items-center mb-4" style="padding: 20px 20px 0;">
+    <a href="<?= site_url('historique') ?>" class="btn-back">
+        <i class="bi bi-arrow-left"></i> Retour à l'historique
+    </a>
 </div>
 
 <?php if (!empty($seance) && is_array($seance)): ?>
