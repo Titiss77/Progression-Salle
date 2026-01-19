@@ -42,7 +42,7 @@ class Action extends BaseController
         $data = [
             'titrePage' => 'Saisie de séance',
             'seance' => $infoSeance,
-            'programme' => $this->donneesModel->getUneProgramme($idProgramme),
+            'programme' => $this->donneesModel->getUnProgramme($idProgramme),
             'exercices' => $this->donneesModel->getExercicesParProgramme($idProgramme),
             'savedPerfs' => $this->donneesModel->getPerformancesRealisees($idSeance)
         ];
@@ -54,7 +54,7 @@ class Action extends BaseController
     {
         $data = [
             'titrePage' => 'Modifier le modèle',
-            'programme' => $this->donneesModel->getUneProgramme($idProgramme),
+            'programme' => $this->donneesModel->getUnProgramme($idProgramme),
             'exercices' => $this->donneesModel->getExercicesParProgramme($idProgramme),
         ];
 
@@ -178,5 +178,54 @@ class Action extends BaseController
 
         $ex = $this->donneesModel->getUnExercice($idExercice);
         return redirect()->to('seance/modification/' . $ex['idProgramme']);
+    }
+
+    // Dans App\Controllers\Action.php
+
+    /**
+     * Affiche la page de gestion des programmes
+     */
+    public function administrerProgramme()
+    {
+        helper('form');
+        $data = [
+            'cssPage' => 'choix.css',  // On réutilise le style des cartes
+            'titrePage' => 'Gestion des programmes',
+            'programmes' => $this->donneesModel->getLesProgrammes(),  // Assure-toi d'avoir cette méthode
+        ];
+        return view('v_admin_programmes', $data);
+    }
+
+    /**
+     * Traite le formulaire d'ajout ou de renommage
+     */
+    public function sauvegarderProgramme()
+    {
+        $id = $this->request->getPost('id');
+        $libelle = $this->request->getPost('libelle');
+
+        if (!empty($libelle)) {
+            $this->actionInDB->saveProgramme([
+                'id' => $id,
+                'libelle' => $libelle
+            ]);
+            return redirect()->to('categorie/administrer')->with('succes', 'Le programme a été mis à jour.');
+        }
+
+        return redirect()->back()->with('erreur', 'Le nom du programme ne peut pas être vide.');
+    }
+
+    /**
+     * Supprime un programme après confirmation
+     */
+    public function supprimerProgramme($id)
+    {
+        try {
+            $this->actionInDB->deleteProgramme($id);
+            return redirect()->to('categorie/administrer')->with('succes', 'Programme supprimé avec succès.');
+        } catch (\Exception $e) {
+            // Si des exercices sont liés, la suppression SQL échouera proprement ici
+            return redirect()->to('categorie/administrer')->with('erreur', 'Impossible de supprimer ce programme car il contient des exercices.');
+        }
     }
 }

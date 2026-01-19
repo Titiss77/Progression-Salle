@@ -1,2 +1,3 @@
 app/Config/HApp.php
 app/Config/HDatabase.php
+/writable/debugbar

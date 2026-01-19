@@ -24,7 +24,7 @@ class Donnees extends Model
 			->getResultArray();
 	}
 
-	public function getUneProgramme($idProgramme)
+	public function getUnProgramme($idProgramme)
 	{
 		return $this
 			->db

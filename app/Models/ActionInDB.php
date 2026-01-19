@@ -132,4 +132,33 @@ class ActionInDB extends Model
 			$this->db->table('exercice')->where('id', $voisin['id'])->update(['ordre' => $ordreActuel]);
 		}
 	}
+
+	// Dans App\Models\ActionInDB.php
+
+	/**
+	 * Sauvegarde un programme (Insertion ou Mise à jour)
+	 */
+	public function saveProgramme($data)
+	{
+		if (empty($data['id'])) {
+			// Si l'ID est vide, on crée un nouveau programme
+			return $this->db->table('programme')->insert($data);
+		} else {
+			// Sinon, on met à jour le libellé du programme existant
+			return $this
+				->db
+				->table('programme')
+				->where('id', $data['id'])
+				->update(['libelle' => $data['libelle']]);
+		}
+	}
+
+	/**
+	 * Supprime un programme de la base
+	 */
+	public function deleteProgramme($id)
+	{
+		// Note : Cela peut échouer si des exercices sont liés (contrainte de clé étrangère)
+		return $this->db->table('programme')->where('id', $id)->delete();
+	}
 }

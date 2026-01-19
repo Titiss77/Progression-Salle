@@ -27,3 +27,7 @@ $routes->get('exercice/supprimer/(:num)', 'Action::supprimerExercice/$1');
 
 $routes->get('exercice/monter/(:num)', 'Action::monterExercice/$1');
 $routes->get('exercice/descendre/(:num)', 'Action::descendreExercice/$1');
+
+$routes->get('categorie/administrer', 'Action::administrerProgramme');
+$routes->post('categorie/sauvegarder', 'Action::sauvegarderProgramme');
+$routes->get('categorie/supprimer/(:num)', 'Action::supprimerProgramme/$1');
