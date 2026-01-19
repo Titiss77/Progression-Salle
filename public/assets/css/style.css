@@ -428,3 +428,204 @@ td input.form-control {
 .gap-2 {
     gap: var(--spacing-sm);
 }
+
+/* =========================================
+   ADMINISTRATION DES PROGRAMMES
+   ========================================= */
+
+.admin-prog-container {
+    padding: var(--spacing-md);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.admin-prog-title {
+    color: var(--color-primary);
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    font-weight: var(--font-weight-bold);
+}
+
+/* Notifications */
+.admin-prog-alert {
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: var(--shadow-sm);
+    font-weight: var(--font-weight-medium);
+}
+
+.admin-prog-alert.alert-success {
+    background-color: #d4edda;
+    color: var(--color-success);
+}
+
+.admin-prog-alert.alert-danger {
+    background-color: #f8d7da;
+    color: var(--color-danger);
+}
+
+/* Créateur de programme */
+.admin-prog-creator {
+    background: var(--color-white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.admin-prog-creator-header h5 {
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-md);
+    font-size: var(--font-size-lg);
+}
+
+.admin-prog-form-inline {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.admin-prog-input {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid var(--gray-200);
+    border-radius: var(--border-radius-md);
+    font-family: inherit;
+    transition: border-color var(--transition-fast);
+}
+
+.admin-prog-input:focus {
+    outline: none;
+    border-color: var(--color-secondary);
+}
+
+.admin-prog-btn-add {
+    background: var(--gradient-teal);
+    color: var(--color-white);
+    border: none;
+    padding: 0 25px;
+    border-radius: var(--border-radius-md);
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform var(--transition-fast);
+}
+
+.admin-prog-btn-add:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+/* Table des programmes */
+.admin-prog-list-section {
+    margin-top: var(--spacing-xl);
+}
+
+.admin-prog-subtitle {
+    font-size: var(--font-size-base);
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-md);
+    padding-left: 5px;
+}
+
+.admin-prog-table-wrapper {
+    background: var(--color-white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+.admin-prog-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-prog-table thead th {
+    background: var(--gray-100);
+    padding: var(--spacing-md);
+    text-align: left;
+    color: var(--gray-600);
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+}
+
+.admin-prog-row {
+    border-bottom: 1px solid var(--gray-100);
+    transition: background var(--transition-fast);
+}
+
+.admin-prog-row:hover {
+    background-color: var(--gray-100);
+}
+
+.admin-prog-cell-name {
+    padding: var(--spacing-md);
+}
+
+.admin-prog-inline-edit {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-prog-input-edit {
+    border: none;
+    background: rgba(0, 0, 0, 0.03);
+    padding: 8px 12px;
+    border-radius: var(--border-radius-sm);
+    width: 100%;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-primary);
+}
+
+.admin-prog-btn-save {
+    background: none;
+    border: none;
+    color: var(--color-secondary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform var(--transition-fast);
+}
+
+.admin-prog-btn-save:hover {
+    transform: scale(1.2);
+}
+
+/* Actions */
+.admin-prog-cell-actions {
+    padding: var(--spacing-md);
+    text-align: right;
+}
+
+.admin-prog-actions-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.admin-prog-btn-action {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius-md);
+    transition: all var(--transition-fast);
+    background: var(--gray-100);
+    color: var(--gray-600);
+}
+
+.admin-prog-btn-action.btn-manage:hover {
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+
+.admin-prog-btn-action.btn-delete:hover {
+    background: var(--color-danger);
+    color: var(--color-white);
+}
