@@ -10,7 +10,7 @@ class BaseSeeder extends Seeder
     {
         $this->db->disableForeignKeyChecks();
         $this->db->table('exercice')->truncate();
-        $this->db->table('categorie')->truncate();
+        $this->db->table('programme')->truncate();
         $this->db->enableForeignKeyChecks();
 
         $donnees = [
@@ -36,16 +36,16 @@ class BaseSeeder extends Seeder
             ]
         ];
 
-        foreach ($donnees as $nomCategorie => $exercices) {
-            $this->db->table('categorie')->insert([
-                'libelle' => $nomCategorie,
+        foreach ($donnees as $nomProgramme => $exercices) {
+            $this->db->table('programme')->insert([
+                'libelle' => $nomProgramme,
             ]);
 
-            $idCategorie = $this->db->insertID();
+            $idProgramme = $this->db->insertID();
 
             foreach ($exercices as $exo) {
                 $dataExercice = [
-                    'idCategorie' => $idCategorie,
+                    'idProgramme' => $idProgramme,
                     'libelle'     => $exo['libelle'],
                     'charge'      => $exo['charge'],
                     'nbSeries'    => $exo['nbSeries'],

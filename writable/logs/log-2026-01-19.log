@@ -1,0 +1,19 @@
+ERROR - 2026-01-19 08:32:55 --> mysqli_sql_exception: Unknown table 'surcharge-progressive.programme' in D:\www\Progression-Salle\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 D:\www\Progression-Salle\system\Database\MySQLi\Connection.php(327): mysqli->query('DROP TABLE `pro...', 0)
+#1 D:\www\Progression-Salle\system\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('DROP TABLE `pro...')
+#2 D:\www\Progression-Salle\system\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('DROP TABLE `pro...')
+#3 D:\www\Progression-Salle\system\Database\Forge.php(663): CodeIgniter\Database\BaseConnection->query('DROP TABLE `pro...')
+#4 D:\www\Progression-Salle\app\Database\Migrations\2026-01-18-000001_CreateBase.php(42): CodeIgniter\Database\Forge->dropTable('programme')
+#5 D:\www\Progression-Salle\system\Database\MigrationRunner.php(876): App\Database\Migrations\CreateBase->down()
+#6 D:\www\Progression-Salle\system\Database\MigrationRunner.php(289): CodeIgniter\Database\MigrationRunner->migrate('down', Object(stdClass))
+#7 D:\www\Progression-Salle\system\Commands\Database\MigrateRollback.php(101): CodeIgniter\Database\MigrationRunner->regress(0)
+#8 D:\www\Progression-Salle\system\CLI\Commands.php(74): CodeIgniter\Commands\Database\MigrateRollback->run(Array)
+#9 D:\www\Progression-Salle\system\CLI\BaseCommand.php(119): CodeIgniter\CLI\Commands->run('migrate:rollbac...', Array)
+#10 D:\www\Progression-Salle\system\Commands\Database\MigrateRefresh.php(86): CodeIgniter\CLI\BaseCommand->call('migrate:rollbac...', Array)
+#11 D:\www\Progression-Salle\system\CLI\Commands.php(74): CodeIgniter\Commands\Database\MigrateRefresh->run(Array)
+#12 D:\www\Progression-Salle\system\CLI\Console.php(47): CodeIgniter\CLI\Commands->run('migrate:refresh', Array)
+#13 D:\www\Progression-Salle\system\Boot.php(360): CodeIgniter\CLI\Console->run()
+#14 D:\www\Progression-Salle\system\Boot.php(104): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+#15 D:\www\Progression-Salle\spark(87): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+#16 {main}

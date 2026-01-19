@@ -13,10 +13,10 @@ class Action extends BaseController
         $this->actionInDB = new ActionInDB();
     }
 
-    public function choix($selection, $idCategorie)
+    public function choix($selection, $idProgramme)
     {
         if ($selection == '1') {
-            $newId = $this->actionInDB->setSeanceVide($idCategorie);
+            $newId = $this->actionInDB->setSeanceVide($idProgramme);
 
             if ($newId) {
                 return redirect()
@@ -28,7 +28,7 @@ class Action extends BaseController
                     ->with('erreur', 'Impossible de créer la séance.');
             }
         } else {
-            return redirect()->to('seance/modification/' . $idCategorie);
+            return redirect()->to('seance/modification/' . $idProgramme);
         }
     }
 
@@ -37,25 +37,25 @@ class Action extends BaseController
         helper('form');
 
         $infoSeance = $this->donneesModel->getSimpleSeance($idSeance);
-        $idCategorie = $infoSeance['idCategorie'];
+        $idProgramme = $infoSeance['idProgramme'];
 
         $data = [
             'titrePage' => 'Saisie de séance',
             'seance' => $infoSeance,
-            'categorie' => $this->donneesModel->getUneCategorie($idCategorie),
-            'exercices' => $this->donneesModel->getExercicesParCategorie($idCategorie),
+            'programme' => $this->donneesModel->getUneProgramme($idProgramme),
+            'exercices' => $this->donneesModel->getExercicesParProgramme($idProgramme),
             'savedPerfs' => $this->donneesModel->getPerformancesRealisees($idSeance)
         ];
 
         return view('v_creer', $data);
     }
 
-    public function modification($idCategorie)
+    public function modification($idProgramme)
     {
         $data = [
             'titrePage' => 'Modifier le modèle',
-            'categorie' => $this->donneesModel->getUneCategorie($idCategorie),
-            'exercices' => $this->donneesModel->getExercicesParCategorie($idCategorie),
+            'programme' => $this->donneesModel->getUneProgramme($idProgramme),
+            'exercices' => $this->donneesModel->getExercicesParProgramme($idProgramme),
         ];
 
         return view('v_modifier', $data);
@@ -109,12 +109,12 @@ class Action extends BaseController
         }
     }
 
-    public function ajouterExercice($idCategorie)
+    public function ajouterExercice($idProgramme)
     {
         helper('form');
         $data = [
             'titrePage' => 'Ajouter un exercice',
-            'idCategorie' => $idCategorie,
+            'idProgramme' => $idProgramme,
         ];
         return view('v_exercice_saisie', $data);
     }
@@ -126,7 +126,7 @@ class Action extends BaseController
 
         $data = [
             'titrePage' => "Modifier l'exercice",
-            'idCategorie' => $exercice['idCategorie'],
+            'idProgramme' => $exercice['idProgramme'],
             'exercice' => $exercice
         ];
         return view('v_exercice_saisie', $data);
@@ -135,11 +135,11 @@ class Action extends BaseController
     public function sauvegarderExercice()
     {
         $id = $this->request->getPost('id');
-        $idCategorie = $this->request->getPost('idCategorie');
+        $idProgramme = $this->request->getPost('idProgramme');
 
         $data = [
             'id' => $id,
-            'idCategorie' => $idCategorie,
+            'idProgramme' => $idProgramme,
             'libelle' => $this->request->getPost('libelle'),
             'nbSeries' => $this->request->getPost('nbSeries'),
             'charge' => $this->request->getPost('charge'),
@@ -148,19 +148,19 @@ class Action extends BaseController
         $this->actionInDB->saveExercice($data);
 
         return redirect()
-            ->to('seance/modification/' . $idCategorie)
+            ->to('seance/modification/' . $idProgramme)
             ->with('succes', 'Exercice enregistré avec succès.');
     }
 
     public function supprimerExercice($idExercice)
     {
         $exercice = $this->donneesModel->getUnExercice($idExercice);
-        $idCategorie = $exercice['idCategorie'];
+        $idProgramme = $exercice['idProgramme'];
 
         $this->actionInDB->deleteExercice($idExercice);
 
         return redirect()
-            ->to('seance/modification/' . $idCategorie)
+            ->to('seance/modification/' . $idProgramme)
             ->with('succes', 'Exercice supprimé.');
     }
 
@@ -169,7 +169,7 @@ class Action extends BaseController
         $this->actionInDB->changerOrdre($idExercice, 'monter');
 
         $ex = $this->donneesModel->getUnExercice($idExercice);
-        return redirect()->to('seance/modification/' . $ex['idCategorie']);
+        return redirect()->to('seance/modification/' . $ex['idProgramme']);
     }
 
     public function descendreExercice($idExercice)
@@ -177,6 +177,6 @@ class Action extends BaseController
         $this->actionInDB->changerOrdre($idExercice, 'descendre');
 
         $ex = $this->donneesModel->getUnExercice($idExercice);
-        return redirect()->to('seance/modification/' . $ex['idCategorie']);
+        return redirect()->to('seance/modification/' . $ex['idProgramme']);
     }
 }

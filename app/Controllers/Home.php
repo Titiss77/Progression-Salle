@@ -24,7 +24,7 @@ class Home extends BaseController
     {
         $data = [
             'titrePage' => 'Séances',
-            'categories' => $this->donneesModel->getLesCategories(),
+            'programmes' => $this->donneesModel->getLesProgrammes(),
             'exercices' => $this->donneesModel->getLesExercices(),
         ];
 
@@ -57,7 +57,7 @@ class Home extends BaseController
         return view('v_seance_detail', $data);
     }
 
-    public function choix($selection, $idCategorie = null)
+    public function choix($selection, $idProgramme = null)
     {
         if ($selection == 1) {
             $action = 'Créer';
@@ -65,12 +65,12 @@ class Home extends BaseController
             $action = 'Modifier';
         }
 
-        if ($idCategorie === null) {
+        if ($idProgramme === null) {
             $data = [
                 'titrePage' => $action . ' une séance',
                 'texte' => $action,
                 'selection' => $selection,
-                'categories' => $this->donneesModel->getLesCategories(),
+                'programmes' => $this->donneesModel->getLesProgrammes(),
             ];
 
             return view('v_choix', $data);

@@ -1,12 +1,12 @@
 <?= $this->extend('l_global') ?>
 
 <?= $this->section('contenu') ?>
-<?php if (!empty($categories) && is_array($categories)): ?>
+<?php if (!empty($programmes) && is_array($programmes)): ?>
 
-<?php foreach ($categories as $categorie): ?>
+<?php foreach ($programmes as $programme): ?>
 
 <div class="categorie-section mb-4">
-    <h2 class="mt-4"><?= esc($categorie['libelle']) ?></h2>
+    <h2 class="mt-4"><?= esc($programme['libelle']) ?></h2>
 
     <table class="table table-striped table-bordered">
         <thead>
@@ -19,7 +19,7 @@
         <tbody>
             <?php foreach ($exercices as $exercice): ?>
 
-            <?php if ($exercice['idCategorie'] == $categorie['id']): ?>
+            <?php if ($exercice['idProgramme'] == $programme['id']): ?>
             <tr>
                 <td>
                     <strong><?= esc($exercice['libelle']) ?></strong>

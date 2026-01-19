@@ -11,15 +11,15 @@ class CreateSeances extends Migration
         // --- Table: seances ---
         $this->forge->addField([
             'id'          => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
-            'idCategorie' => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'null' => true],
+            'idProgramme' => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'null' => true],
             'date_seance' => ['type' => 'DATE', 'null' => false], 
             'status' => ['type' => 'ENUM', 'constraint' => ['en_cours','fini'], 'default' => 'en_cours'],
         ]);
         
         $this->forge->addKey('id', true);
         
-        // Clé étrangère vers la table 'categorie'
-        $this->forge->addForeignKey('idCategorie', 'categorie', 'id', 'CASCADE', 'CASCADE');
+        // Clé étrangère vers la table 'programme'
+        $this->forge->addForeignKey('idProgramme', 'programme', 'id', 'CASCADE', 'CASCADE');
         
         $this->forge->createTable('seances');
     }

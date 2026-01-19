@@ -8,18 +8,18 @@ class CreateBase extends Migration
 {
     public function up()
     {
-        // --- Table: categorie ---
+        // --- Table: programme ---
         $this->forge->addField([
             'id'          => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
             'libelle'     => ['type' => 'VARCHAR', 'constraint' => 100, 'null' => false],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->createTable('categorie');
+        $this->forge->createTable('programme');
 
         // --- Table: exercice ---
         $this->forge->addField([
             'id'          => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
-            'idCategorie' => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'null' => true],
+            'idProgramme' => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'null' => true],
             'libelle'     => ['type' => 'VARCHAR', 'constraint' => 100, 'null' => false],
             'charge'      => ['type' => 'FLOAT', 'constraint' => 10, 'null' => true],
             'nbSeries'    => ['type' => 'INT', 'constraint' => 2, 'null' => true],
@@ -30,7 +30,7 @@ class CreateBase extends Migration
         $this->forge->addKey('id', true);
         
         // This will now work because types match
-        $this->forge->addForeignKey('idCategorie', 'categorie', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('idProgramme', 'programme', 'id', 'CASCADE', 'CASCADE');
         
         $this->forge->createTable('exercice');
     }
@@ -39,6 +39,6 @@ class CreateBase extends Migration
     {
         // Drop child table first to avoid constraint errors
         $this->forge->dropTable('exercice');
-        $this->forge->dropTable('categorie');
+        $this->forge->dropTable('programme');
     }
 }

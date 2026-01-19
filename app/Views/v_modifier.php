@@ -6,10 +6,10 @@
 <div class="alert alert-success"><?= session()->getFlashdata('succes') ?></div>
 <?php endif; ?>
 
-<h2 class="text-primary text-center mb-4">Modifier le modèle : <?= esc($categorie['libelle']) ?></h2>
+<h2 class="text-primary text-center mb-4">Modifier le modèle : <?= esc($programme['libelle']) ?></h2>
 
 <div class="text-end mb-3">
-    <a href="<?= site_url('exercice/ajouter/' . $categorie['id']) ?>" class="btn btn-success">
+    <a href="<?= site_url('exercice/ajouter/' . $programme['id']) ?>" class="btn btn-success">
         <i class="bi bi-plus-lg"></i> Ajouter un exercice
     </a>
 </div>

@@ -6,7 +6,7 @@
 <?= form_open('exercice/sauvegarder') ?>
 
 <input type="hidden" name="id" value="<?= isset($exercice) ? esc($exercice['id']) : '' ?>">
-<input type="hidden" name="idCategorie" value="<?= esc($idCategorie) ?>">
+<input type="hidden" name="idProgramme" value="<?= esc($idProgramme) ?>">
 
 <div class="card p-4 shadow-sm">
 
@@ -31,7 +31,7 @@
     </div>
 
     <div class="d-flex justify-content-between mt-4">
-        <a href="<?= site_url('seance/modification/' . $idCategorie) ?>" class="btn btn-secondary">Annuler</a>
+        <a href="<?= site_url('seance/modification/' . $idProgramme) ?>" class="btn btn-secondary">Annuler</a>
 
         <button type="submit" class="btn btn-success">
             <i class="bi bi-check-lg"></i> Enregistrer

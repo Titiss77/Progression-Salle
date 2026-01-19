@@ -21,7 +21,7 @@ class PerformanceSeeder extends Seeder
         foreach ($seances as $seance) {
             // Pour chaque séance, on récupère les exercices de la catégorie concernée
             $exercices = $this->db->table('exercice')
-                ->where('idCategorie', $seance['idCategorie'])
+                ->where('idProgramme', $seance['idProgramme'])
                 ->get()
                 ->getResultArray();
 

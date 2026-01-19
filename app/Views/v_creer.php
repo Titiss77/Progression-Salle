@@ -10,7 +10,7 @@
 
 <div class="mb-4 text-center">
     <span class="text-muted">Séance du <?= date('d/m/Y') ?> :</span>
-    <h1 class="text-primary"><?= esc($categorie['libelle']) ?></h1>
+    <h1 class="text-primary"><?= esc($programme['libelle']) ?></h1>
     <p class="small text-muted">Remplis tes performances ci-dessous</p>
 </div>
 

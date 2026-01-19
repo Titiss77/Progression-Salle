@@ -14,10 +14,10 @@ class ActionInDB extends Model
 		$this->db = \Config\database::connect();
 	}
 
-	public function setSeanceVide($idCategorie)
+	public function setSeanceVide($idProgramme)
 	{
 		$data = [
-			'idCategorie' => $idCategorie,
+			'idProgramme' => $idProgramme,
 			'date_seance' => date('Y-m-d'),
 		];
 
@@ -63,7 +63,7 @@ class ActionInDB extends Model
 			$maxOrdre = $this
 				->db
 				->table('exercice')
-				->where('idCategorie', $data['idCategorie'])
+				->where('idProgramme', $data['idProgramme'])
 				->where('estActif', 1)
 				->selectMax('ordre')
 				->get()
@@ -82,7 +82,7 @@ class ActionInDB extends Model
 				->update(['estActif' => 0]);
 
 			$nouvelExercice = [
-				'idCategorie' => $data['idCategorie'],
+				'idProgramme' => $data['idProgramme'],
 				'libelle' => $data['libelle'],
 				'nbSeries' => $data['nbSeries'],
 				'charge' => $data['charge'],
@@ -102,12 +102,12 @@ class ActionInDB extends Model
 			return;
 
 		$ordreActuel = $exercice['ordre'];
-		$idCategorie = $exercice['idCategorie'];
+		$idProgramme = $exercice['idProgramme'];
 
 		$builder = $this
 			->db
 			->table('exercice')
-			->where('idCategorie', $idCategorie)
+			->where('idProgramme', $idProgramme)
 			->where('estActif', 1);
 
 		if ($direction === 'monter') {

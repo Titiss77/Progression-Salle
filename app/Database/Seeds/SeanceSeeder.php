@@ -14,8 +14,8 @@ class SeanceSeeder extends Seeder
         $this->db->enableForeignKeyChecks();
 
         $seances = [
-                ['idCategorie' => 1, 'date_seance' => '2026-01-17', 'status' => 'fini'],
-                ['idCategorie' => 2, 'date_seance' => '2026-01-15', 'status' => 'fini'],
+                ['idProgramme' => 1, 'date_seance' => '2026-01-17', 'status' => 'fini'],
+                ['idProgramme' => 2, 'date_seance' => '2026-01-15', 'status' => 'fini'],
             ];
             
         $this->db->table('seances')->insertBatch($seances);
