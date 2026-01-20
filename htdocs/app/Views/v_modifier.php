@@ -35,12 +35,12 @@
                 <td class="text-center"><?= esc($ex['nbSeries']) ?></td>
                 <td class="text-center">
                     <div class="btn-group">
-                        <a href="<?= site_url('exercice/monter/' . $ex['id']) ?>"
+                        <a href="<?= site_url('exercice/monter/' . $ex['id'] . '/' . $programme['id']) ?>"
                             class="btn btn-sm btn-outline-secondary" title="Monter">
                             <i class="bi bi-arrow-up"></i>
                         </a>
 
-                        <a href="<?= site_url('exercice/descendre/' . $ex['id']) ?>"
+                        <a href="<?= site_url('exercice/descendre/' . $ex['id'] . '/' . $programme['id']) ?>"
                             class="btn btn-sm btn-outline-secondary" title="Descendre">
                             <i class="bi bi-arrow-down"></i>
                         </a>

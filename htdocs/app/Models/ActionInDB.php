@@ -54,24 +54,22 @@ class ActionInDB extends Model
 
 	public function saveExercice($data)
 	{
-		// 1. Calcul de l'ordre (nécessaire dans tous les cas d'ajout)
-		if (empty($data['id'])) {
-			// On récupère l'ordre max pour CE programme via la jointure
+		// 1. Calcul du nouvel ordre (Basé sur la table JOINTURE pour ce programme)
+		if (empty($data['id']) || !empty($data['idExistant'])) {
 			$maxOrdre = $this
 				->db
-				->table('exercice e')
-				->join('jointure j', 'j.idExercice = e.id')
-				->where('j.idProgramme', $data['idProgramme'])
-				->selectMax('e.ordre')
+				->table('jointure')
+				->where('idProgramme', $data['idProgramme'])
+				->selectMax('ordre')
 				->get()
 				->getRowArray();
 
 			$nouvelOrdre = ($maxOrdre['ordre'] ?? 0) + 1;
 		}
 
-		// CAS A : AJOUT D'UN EXERCICE EXISTANT (Sélectionné dans la liste)
+		// CAS A : LIER UN EXISTANT
 		if (empty($data['id']) && !empty($data['idExistant'])) {
-			// On vérifie si le lien existe déjà pour éviter les doublons
+			// Vérifier doublon
 			$exists = $this
 				->db
 				->table('jointure')
@@ -80,103 +78,104 @@ class ActionInDB extends Model
 				->countAllResults();
 
 			if ($exists == 0) {
-				// Création du lien dans la table jointure
 				$this->db->table('jointure')->insert([
 					'idProgramme' => $data['idProgramme'],
-					'idExercice' => $data['idExistant']
+					'idExercice' => $data['idExistant'],
+					'ordre' => $nouvelOrdre  // <-- Ordre ici
 				]);
-
-				// Optionnel : On met à jour l'ordre de l'exercice global pour qu'il soit bien trié dans ce programme
-				// (Note : Dans un système many-to-many strict, l'ordre devrait être dans la table jointure,
-				// mais ici il est dans exercice, donc on le met à jour pour le dernier ajout).
-				$this->db->table('exercice')->where('id', $data['idExistant'])->update(['ordre' => $nouvelOrdre]);
 			}
 			return true;
 		}
 
-		// CAS B : CRÉATION D'UN NOUVEL EXERCICE (Pas d'ID, pas d'Existant)
+		// CAS B : CRÉER NOUVEAU
 		if (empty($data['id'])) {
 			$nouvelExercice = [
 				'libelle' => $data['libelle'],
 				'nbSeries' => $data['nbSeries'],
 				'charge' => $data['charge'],
-				'estActif' => 1,
-				'ordre' => $nouvelOrdre
+				'estActif' => 1
+				// Pas d'ordre ici
 			];
 
-			// 1. Insertion dans la table exercice
 			$this->db->table('exercice')->insert($nouvelExercice);
 			$idExerciceCree = $this->db->insertID();
 
-			// 2. Insertion dans la table jointure
 			return $this->db->table('jointure')->insert([
 				'idProgramme' => $data['idProgramme'],
-				'idExercice' => $idExerciceCree
+				'idExercice' => $idExerciceCree,
+				'ordre' => $nouvelOrdre  // <-- Ordre ici
 			]);
 		}
-		// CAS C : MODIFICATION D'UN EXERCICE (L'ID existe déjà)
+		// CAS C : MODIFICATION (Pas de changement d'ordre ici)
 		else {
-			$donneesUpdate = [
-				'libelle' => $data['libelle'],
-				'nbSeries' => $data['nbSeries'],
-				'charge' => $data['charge'],
-			];
-
 			return $this
 				->db
 				->table('exercice')
 				->where('id', $data['id'])
-				->update($donneesUpdate);
+				->update([
+					'libelle' => $data['libelle'],
+					'nbSeries' => $data['nbSeries'],
+					'charge' => $data['charge'],
+				]);
 		}
 	}
 
-	public function changerOrdre($idExercice, $direction)
+	/**
+	 * Change l'ordre dans la table JOINTURE
+	 */
+	public function changerOrdre($idExercice, $idProgramme, $direction)
 	{
-		// 1. Récupérer l'exercice et son Programme via la jointure
-		$exercice = $this
+		// 1. Récupérer l'entrée actuelle dans la jointure
+		$lienActuel = $this
 			->db
-			->table('exercice e')
-			->select('e.*, j.idProgramme')
-			->join('jointure j', 'j.idExercice = e.id')
-			->where('e.id', $idExercice)
+			->table('jointure')
+			->where('idProgramme', $idProgramme)
+			->where('idExercice', $idExercice)
 			->get()
 			->getRowArray();
 
-		if (!$exercice)
+		if (!$lienActuel)
 			return;
 
-		$ordreActuel = $exercice['ordre'];
-		$idProgramme = $exercice['idProgramme'];
+		$ordreActuel = $lienActuel['ordre'];
 
-		// 2. Trouver le voisin en filtrant via la jointure
+		// 2. Trouver le voisin dans la MEME table jointure (même programme)
 		$builder = $this
 			->db
-			->table('exercice e')
-			->select('e.*')
-			->join('jointure j', 'j.idExercice = e.id')
-			->where('j.idProgramme', $idProgramme)  // On reste dans le même programme
-			->where('e.estActif', 1);
+			->table('jointure')
+			->where('idProgramme', $idProgramme);
 
 		if ($direction === 'monter') {
 			$voisin = $builder
-				->where('e.ordre <', $ordreActuel)
-				->orderBy('e.ordre', 'DESC')
+				->where('ordre <', $ordreActuel)
+				->orderBy('ordre', 'DESC')
 				->limit(1)
 				->get()
 				->getRowArray();
 		} else {
 			$voisin = $builder
-				->where('e.ordre >', $ordreActuel)
-				->orderBy('e.ordre', 'ASC')
+				->where('ordre >', $ordreActuel)
+				->orderBy('ordre', 'ASC')
 				->limit(1)
 				->get()
 				->getRowArray();
 		}
 
-		// 3. Echange
+		// 3. Echange des ordres
 		if ($voisin) {
-			$this->db->table('exercice')->where('id', $idExercice)->update(['ordre' => $voisin['ordre']]);
-			$this->db->table('exercice')->where('id', $voisin['id'])->update(['ordre' => $ordreActuel]);
+			// Update Voisin
+			$this
+				->db
+				->table('jointure')
+				->where('id', $voisin['id'])  // On utilise l'ID technique de la jointure c'est plus sûr
+				->update(['ordre' => $ordreActuel]);
+
+			// Update Actuel
+			$this
+				->db
+				->table('jointure')
+				->where('id', $lienActuel['id'])
+				->update(['ordre' => $voisin['ordre']]);
 		}
 	}
 
@@ -197,10 +196,12 @@ class ActionInDB extends Model
 	}
 
 	public function supprimerLienExercice($idExercice, $idProgramme)
-    {
-        return $this->db->table('jointure')
-            ->where('idExercice', $idExercice)
-            ->where('idProgramme', $idProgramme)
-            ->delete();
-    }
+	{
+		return $this
+			->db
+			->table('jointure')
+			->where('idExercice', $idExercice)
+			->where('idProgramme', $idProgramme)
+			->delete();
+	}
 }

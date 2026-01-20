@@ -166,22 +166,20 @@ class Action extends BaseController
             ->with('succes', 'Exercice retiré du programme.');
     }
 
-    public function monterExercice($idExercice)
+    // ...
+    public function monterExercice($idExercice, $idProgramme)
     {
-        // Le modèle gère le tri en tenant compte du programme via la jointure
-        $this->actionInDB->changerOrdre($idExercice, 'monter');
-
-        $ex = $this->donneesModel->getUnExercice($idExercice);
-        return redirect()->to('seance/modification/' . $ex['idProgramme']);
+        // On passe idProgramme au modèle
+        $this->actionInDB->changerOrdre($idExercice, $idProgramme, 'monter');
+        return redirect()->to('seance/modification/' . $idProgramme);
     }
 
-    public function descendreExercice($idExercice)
+    public function descendreExercice($idExercice, $idProgramme)
     {
-        $this->actionInDB->changerOrdre($idExercice, 'descendre');
-
-        $ex = $this->donneesModel->getUnExercice($idExercice);
-        return redirect()->to('seance/modification/' . $ex['idProgramme']);
+        $this->actionInDB->changerOrdre($idExercice, $idProgramme, 'descendre');
+        return redirect()->to('seance/modification/' . $idProgramme);
     }
+    // ...
 
     public function administrerProgramme()
     {

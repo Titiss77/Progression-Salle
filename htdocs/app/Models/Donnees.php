@@ -53,11 +53,11 @@ class Donnees extends Model
 		return $this
 			->db
 			->table('exercice e')
-			->select('e.*, j.idProgramme')
-			->join('jointure j', 'j.idExercice = e.id')  // Jointure
+			->select('e.*, j.idProgramme, j.ordre')  // On sélectionne l'ordre de la jointure
+			->join('jointure j', 'j.idExercice = e.id')
 			->where('j.idProgramme', $idProgramme)
 			->where('e.estActif', 1)
-			->orderBy('e.ordre', 'ASC')
+			->orderBy('j.ordre', 'ASC')  // TRI SUR JOINTURE
 			->get()
 			->getResultArray();
 	}
