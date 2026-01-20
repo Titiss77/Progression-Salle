@@ -28,8 +28,9 @@ class Donnees extends Model
 	{
 		return $this
 			->db
-			->table('exercice')
-			->select('id, idProgramme, libelle, charge, nbSeries')
+			->table('exercice e')
+			->select('e.id, j.idProgramme, e.libelle, e.charge, e.nbSeries')
+			->join('jointure j', 'j.idExercice = e.id') 
 			->orderBy('ordre', 'ASC')
 			->get()
 			->getResultArray();
