@@ -162,4 +162,9 @@ class ActionInDB extends Model
 				->update(['libelle' => $data['libelle']]);
 		}
 	}
+
+	public function deleteSeance($idSeance)
+	{
+		return $this->db->table('seances')->where('id', $idSeance)->delete();
+	}
 }

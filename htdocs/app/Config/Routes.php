@@ -13,6 +13,7 @@ $routes->get('(:num)', 'Home::choix/$1');
 $routes->get('(:num)/(:num)', 'Action::choix/$1/$2');
 
 $routes->get('seance/creation/(:num)', 'Action::creation/$1');
+$routes->get('seance/supprimer/(:num)', 'Action::supprimerSeance/$1');
 $routes->get('seance/modification/(:num)', 'Action::modification/$1');
 
 $routes->post('seance/enregistrer', 'Action::enregistrer');

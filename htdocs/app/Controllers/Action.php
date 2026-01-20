@@ -228,4 +228,12 @@ class Action extends BaseController
             return redirect()->to('categorie/administrer')->with('erreur', 'Impossible de supprimer ce programme car il contient des exercices.');
         }
     }
+
+    public function supprimerSeance($idSeance)
+    {
+        $this->actionInDB->deleteSeance($idSeance);
+
+        // On redirige vers l'historique ou l'accueil avec un message de confirmation
+        return redirect()->to('historique')->with('succes', 'La séance a été supprimée avec succès.');
+    }
 }

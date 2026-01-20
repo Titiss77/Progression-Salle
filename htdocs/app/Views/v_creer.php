@@ -88,6 +88,10 @@
         <i class="bi bi-check-circle-fill"></i> Terminer la séance
     </button>
 
+    <a href="<?= site_url('seance/supprimer/' . $seance['id']) ?>" class="btn btn-danger"
+        onclick="return confirm('Attention : Voulez-vous vraiment supprimer définitivement cette séance ?');">
+        <i class="bi bi-trash"></i> Supprimer la séance
+    </a>
     <a href="<?= site_url('/') ?>" class="btn btn-outline-secondary">Annuler</a>
 </div>
 
