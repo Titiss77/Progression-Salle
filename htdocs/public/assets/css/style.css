@@ -211,6 +211,22 @@ a:hover {
     transition: var(--transition-fast);
     margin-bottom: var(--spacing-sm);
     width: 80%;
+    text-align: center;
+}
+
+#groupLibelle,
+.row {
+    text-align: center;
+}
+
+.form-select {
+    padding: var(--spacing-sm);
+    margin: var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+}
+
+.form-text {
+    font-size: var(--font-size-xs);
 }
 
 .form-control:focus {

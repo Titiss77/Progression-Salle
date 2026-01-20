@@ -11,22 +11,24 @@
 <div class="card p-4 shadow-sm">
 
     <?php if (!isset($exercice['id']) && !empty($listeExercices)): ?>
-    <div class="mb-4 p-3 bg-light border rounded">
-        <label for="idExistant" class="form-label fw-bold text-primary">Option 1 : Choisir dans la liste</label>
+    <div class="mb-4 p-3 bg-light border rounded" id="groupLibelle">
+        <label for=" idExistant" class="form-label fw-bold text-primary">Option 1 : Choisir dans la liste</label>
         <select class="form-select" id="idExistant" name="idExistant" onchange="toggleLibelleField()">
             <option value="">-- Créer un nouvel exercice --</option>
             <?php foreach ($listeExercices as $ex): ?>
             <option value="<?= $ex['id'] ?>"><?= esc($ex['libelle']) ?></option>
             <?php endforeach; ?>
         </select>
-        <div class="form-text">Si vous sélectionnez un exercice ici, le nom ci-dessous sera ignoré.</div>
+        <div class="form-text">Si vous sélectionnez un exercice ici, tous le reste sera ignoré.</div>
     </div>
     <hr>
     <?php endif; ?>
 
     <div class="mb-3" id="groupLibelle">
+        <p class="form-label fw-bold text-primary">
+            <?= (!isset($exercice['id']) && !empty($listeExercices)) ? 'Option 2 : ' : 'Option 1 : ' ?></p>
         <label for="libelle" class="form-label fw-bold">
-            <?= (!isset($exercice['id']) && !empty($listeExercices)) ? 'Option 2 : Nouveau nom' : "Nom de l'exercice" ?>
+            Nom de l'exercice
         </label>
         <input type="text" class="form-control" id="libelle" name="libelle"
             value="<?= isset($exercice) ? esc($exercice['libelle']) : '' ?>">
