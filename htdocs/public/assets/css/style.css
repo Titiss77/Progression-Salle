@@ -54,8 +54,8 @@ a:hover {
 
 /* Padding interne global pour le contenu */
 .site-container>*:not(.btn-back-wrapper) {
-    padding-left: var(--spacing-lg);
-    padding-right: var(--spacing-lg);
+    padding-left: var(--spacing-sm);
+    padding-right: var(--spacing-sm);
 }
 
 /* -----------------------------------------------------------
@@ -270,6 +270,8 @@ td input.form-control {
     border-bottom: 1px solid var(--gray-200);
     color: var(--gray-800);
     text-align: center;
+    font-size: var(--font-size-xs);
+    padding: 10px 0;
 }
 
 /* Ligne active ou survol */
@@ -371,7 +373,7 @@ td input.form-control {
 ----------------------------------------------------------- */
 .card {
     border: none;
-    border-radius: var(--border-radius-lg);
+    border-radius: var(--border-radius-md);
     box-shadow: var(--shadow-md);
     overflow: hidden;
     /* Pour que le header ne dépasse pas */

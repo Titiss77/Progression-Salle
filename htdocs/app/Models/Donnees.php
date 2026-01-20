@@ -123,4 +123,33 @@ class Donnees extends Model
 		}
 		return $perfsOrdonnees;
 	}
+
+	public function getStatistiques($id)
+	{
+		return $this
+			->db
+			->table('performances p')
+			->select('c.libelle AS titre, s.date_seance AS date, e.libelle')
+			// --- VOS ANCIENNES COLONNES (Listes) ---
+			->select("GROUP_CONCAT(p.reps ORDER BY p.numero_serie ASC SEPARATOR ', ') as liste_reps")
+			->select("GROUP_CONCAT(p.poids_effectif ORDER BY p.numero_serie ASC SEPARATOR ', ') as liste_poids")
+			// --- NOUVELLES STATISTIQUES ---
+			// 1. Nombre total de répétitions pour cet exercice
+			->select('SUM(p.reps) as total_reps')
+			// 2. Volume total (Tonnage) : La somme de (reps * poids) pour chaque série
+			// Exemple : 3 séries de 10 reps à 100kg = 3000kg de volume
+			->select('SUM(p.reps * p.poids_effectif) as volume_total')
+			// 3. (Optionnel) Poids maximum soulevé sur une série (1RM estimé ou Max de la séance)
+			->select('MAX(p.poids_effectif) as max_poids')
+			// 4. (Optionnel) Nombre de séries
+			->select('COUNT(p.numero_serie) as nb_series')
+			->join('exercice e', 'p.idExercice = e.id')
+			->join('seances s', 's.id = p.idSeance')
+			->join('programme c', 'c.id = s.idProgramme')
+			->where('p.idSeance', $id)
+			->groupBy('e.id, e.libelle')  // On groupe toujours par exercice
+			->orderBy('e.id', 'ASC')
+			->get()
+			->getResultArray();
+	}
 }

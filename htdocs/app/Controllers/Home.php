@@ -43,15 +43,20 @@ class Home extends BaseController
 
     public function detail($id)
     {
-        $seance = $this->donneesModel->getUneSeances($id);
+        // 1. On utilise getStatistiques car elle contient TOUT (Infos séance + Calculs)
+        $donnees_completes = $this->donneesModel->getStatistiques($id);
 
-        if (empty($seance)) {
+        // 2. Vérification si la séance existe
+        if (empty($donnees_completes)) {
             return redirect()->to('/historique')->with('erreur', 'Séance introuvable.');
         }
 
         $data = [
-            'titrePage' => $seance[0]['titre'] . ' : ' . $seance[0]['date'],
-            'seance' => $seance,
+            // On récupère le titre et la date depuis la première ligne des résultats
+            'titrePage' => $donnees_completes[0]['titre'] . ' : ' . date('d/m/Y', strtotime($donnees_completes[0]['date'])),
+            // 3. IMPORTANT : On passe le tableau complet à la clé 'seance'
+            // pour que la Vue puisse faire "foreach ($seance as $exo)"
+            'seance' => $donnees_completes,
         ];
 
         return view('v_seance_detail', $data);
