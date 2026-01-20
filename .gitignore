@@ -1,0 +1,3 @@
+htdocs/app/Config/App.php
+htdocs/app/Config/Database.php
+htdocs/.env
