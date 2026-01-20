@@ -66,8 +66,4 @@
         </tbody>
     </table>
 </div>
-
-<div class="text-center mt-4">
-    <a href="<?= site_url('/') ?>" class="btn btn-secondary">← Retour au menu</a>
-</div>
 <?= $this->endSection() ?>
