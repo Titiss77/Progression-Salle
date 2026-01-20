@@ -23,7 +23,7 @@ $routes->get('exercice/modifier/(:num)/(:num)', 'Action::modifierExercice/$1/$2'
 
 $routes->post('exercice/sauvegarder', 'Action::sauvegarderExercice');
 
-$routes->get('exercice/supprimer/(:num)', 'Action::supprimerExercice/$1');
+$routes->get('exercice/supprimer/(:num)/(:num)', 'Action::supprimerExercice/$1/$2');
 
 $routes->get('exercice/monter/(:num)', 'Action::monterExercice/$1');
 $routes->get('exercice/descendre/(:num)', 'Action::descendreExercice/$1');

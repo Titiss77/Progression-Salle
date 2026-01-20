@@ -51,8 +51,9 @@
                         <i class="bi bi-pencil-square"></i>
                     </a>
 
-                    <a href="<?= site_url('exercice/supprimer/' . $ex['id']) ?>" class="btn btn-sm btn-danger ms-1"
-                        onclick="return confirm('Supprimer ?')">
+                    <a href="<?= site_url('exercice/supprimer/' . $ex['id'] . '/' . $programme['id']) ?>"
+                        class="btn btn-sm btn-danger ms-1"
+                        onclick="return confirm('Retirer cet exercice du programme ?')">
                         <i class="bi bi-trash"></i>
                     </a>
                 </td>

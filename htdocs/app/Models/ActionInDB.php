@@ -195,4 +195,12 @@ class ActionInDB extends Model
 			return $this->db->table('programme')->where('id', $data['id'])->update(['libelle' => $data['libelle']]);
 		}
 	}
+
+	public function supprimerLienExercice($idExercice, $idProgramme)
+    {
+        return $this->db->table('jointure')
+            ->where('idExercice', $idExercice)
+            ->where('idProgramme', $idProgramme)
+            ->delete();
+    }
 }

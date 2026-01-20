@@ -115,19 +115,19 @@ class Action extends BaseController
     public function modifierExercice($idExercice, $idProgramme)
     {
         helper('form');
-        
+
         // On récupère les infos de l'exercice
         $exercice = $this->donneesModel->getUnExercice($idExercice);
 
         $data = [
-            'titrePage'   => "Modifier l'exercice",
+            'titrePage' => "Modifier l'exercice",
             // IMPORTANT : On utilise l'ID passé dans l'URL, pas celui de la base de données
-            'idProgramme' => $idProgramme, 
-            'exercice'    => $exercice,
+            'idProgramme' => $idProgramme,
+            'exercice' => $exercice,
             // On garde la liste pour éviter les erreurs, même si pas utilisée en modif
             'listeExercices' => $this->donneesModel->getTousLesExercices(),
         ];
-        
+
         return view('v_exercice_saisie', $data);
     }
 
@@ -155,16 +155,15 @@ class Action extends BaseController
             ->with('succes', 'Exercice enregistré avec succès.');
     }
 
-    public function supprimerExercice($idExercice)
+    public function supprimerExercice($idExercice, $idProgramme)
     {
-        $exercice = $this->donneesModel->getUnExercice($idExercice);
-        $idProgramme = $exercice['idProgramme'];
+        // On supprime seulement le lien dans la table 'jointure'
+        $this->actionInDB->supprimerLienExercice($idExercice, $idProgramme);
 
-        $this->actionInDB->deleteExercice($idExercice);
-
+        // On redirige vers le bon programme grâce à l'ID passé en paramètre
         return redirect()
             ->to('seance/modification/' . $idProgramme)
-            ->with('succes', 'Exercice supprimé.');
+            ->with('succes', 'Exercice retiré du programme.');
     }
 
     public function monterExercice($idExercice)
