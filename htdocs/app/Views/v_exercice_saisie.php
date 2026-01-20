@@ -10,10 +10,26 @@
 
 <div class="card p-4 shadow-sm">
 
-    <div class="mb-3">
-        <label for="libelle" class="form-label fw-bold">Nom de l'exercice</label>
+    <?php if (!isset($exercice['id']) && !empty($listeExercices)): ?>
+    <div class="mb-4 p-3 bg-light border rounded">
+        <label for="idExistant" class="form-label fw-bold text-primary">Option 1 : Choisir dans la liste</label>
+        <select class="form-select" id="idExistant" name="idExistant" onchange="toggleLibelleField()">
+            <option value="">-- Créer un nouvel exercice --</option>
+            <?php foreach ($listeExercices as $ex): ?>
+            <option value="<?= $ex['id'] ?>"><?= esc($ex['libelle']) ?></option>
+            <?php endforeach; ?>
+        </select>
+        <div class="form-text">Si vous sélectionnez un exercice ici, le nom ci-dessous sera ignoré.</div>
+    </div>
+    <hr>
+    <?php endif; ?>
+
+    <div class="mb-3" id="groupLibelle">
+        <label for="libelle" class="form-label fw-bold">
+            <?= (!isset($exercice['id']) && !empty($listeExercices)) ? 'Option 2 : Nouveau nom' : "Nom de l'exercice" ?>
+        </label>
         <input type="text" class="form-control" id="libelle" name="libelle"
-            value="<?= isset($exercice) ? esc($exercice['libelle']) : '' ?>" required>
+            value="<?= isset($exercice) ? esc($exercice['libelle']) : '' ?>">
     </div>
 
     <div class="row">
@@ -40,5 +56,21 @@
 </div>
 
 <?= form_close() ?>
+
+<script>
+function toggleLibelleField() {
+    var select = document.getElementById('idExistant');
+    var inputLibelle = document.getElementById('libelle');
+
+    if (select && select.value !== "") {
+        inputLibelle.disabled = true;
+        inputLibelle.value = ""; // On vide le champ texte
+        inputLibelle.required = false;
+    } else {
+        inputLibelle.disabled = false;
+        inputLibelle.required = true;
+    }
+}
+</script>
 
 <?= $this->endSection() ?>

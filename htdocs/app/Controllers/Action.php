@@ -106,6 +106,8 @@ class Action extends BaseController
         $data = [
             'titrePage' => 'Ajouter un exercice',
             'idProgramme' => $idProgramme,
+            // AJOUT : On passe la liste des exercices existants
+            'listeExercices' => $this->donneesModel->getTousLesExercices(),
         ];
         return view('v_exercice_saisie', $data);
     }
@@ -126,23 +128,26 @@ class Action extends BaseController
 
     public function sauvegarderExercice()
     {
-        $id = $this->request->getPost('id');
+        $id = $this->request->getPost('id');  // ID de l'exercice si modification
         $idProgramme = $this->request->getPost('idProgramme');
+
+        // AJOUT : On récupère l'ID de l'exercice existant sélectionné (optionnel)
+        $idExistant = $this->request->getPost('idExistant');
 
         $data = [
             'id' => $id,
-            'idProgramme' => $idProgramme, // Sera utilisé pour la jointure
+            'idProgramme' => $idProgramme,
+            'idExistant' => $idExistant,  // On passe ce champ au modèle
             'libelle' => $this->request->getPost('libelle'),
             'nbSeries' => $this->request->getPost('nbSeries'),
             'charge' => $this->request->getPost('charge'),
         ];
 
-        // Le modèle gère maintenant l'insertion dans 'jointure'
         $this->actionInDB->saveExercice($data);
 
         return redirect()
             ->to('seance/modification/' . $idProgramme)
-            ->with('succes', 'Exercice enregistré.');
+            ->with('succes', 'Exercice enregistré avec succès.');
     }
 
     public function supprimerExercice($idExercice)

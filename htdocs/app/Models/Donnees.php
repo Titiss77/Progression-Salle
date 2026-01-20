@@ -30,8 +30,20 @@ class Donnees extends Model
 			->db
 			->table('exercice e')
 			->select('e.id, j.idProgramme, e.libelle, e.charge, e.nbSeries')
-			->join('jointure j', 'j.idExercice = e.id') 
+			->join('jointure j', 'j.idExercice = e.id')
 			->orderBy('ordre', 'ASC')
+			->get()
+			->getResultArray();
+	}
+
+	public function getTousLesExercices()
+	{
+		return $this
+			->db
+			->table('exercice')
+			->select('id, libelle')
+			->where('estActif', 1)
+			->orderBy('libelle', 'ASC')
 			->get()
 			->getResultArray();
 	}
