@@ -14,29 +14,14 @@ class Donnees extends Model
 		$this->db = \Config\Database::connect();
 	}
 
-	public function getLesProgrammes()
-	{
-		return $this
-			->db
-			->table('programme')
-			->select('id, libelle')
-			->where('estActif', 1)
-			->get()
-			->getResultArray();
-	}
-
-	/**
-	 * Cette méthode (utilisée pour l'historique) ne change pas
-	 * car elle doit pouvoir lire même les programmes archivés.
-	 */
 	public function getUnProgramme($id)
 	{
-		return $this
-			->db
-			->table('programme')
-			->where('id', $id)
-			->get()
-			->getRowArray();
+		return $this->db->table('programme')->where('id', $id)->get()->getRowArray();
+	}
+
+	public function getLesProgrammes()
+	{
+		return $this->db->table('programme')->where('estActif', 1)->get()->getResultArray();
 	}
 
 	public function getLesExercices()
@@ -54,10 +39,12 @@ class Donnees extends Model
 	{
 		return $this
 			->db
-			->table('exercice')
-			->where('idProgramme', $idProgramme)
-			->where('estActif', 1)
-			->orderBy('ordre', 'ASC')
+			->table('exercice e')
+			->select('e.*, j.idProgramme')
+			->join('jointure j', 'j.idExercice = e.id')  // Jointure
+			->where('j.idProgramme', $idProgramme)
+			->where('e.estActif', 1)
+			->orderBy('e.ordre', 'ASC')
 			->get()
 			->getResultArray();
 	}
@@ -66,8 +53,10 @@ class Donnees extends Model
 	{
 		return $this
 			->db
-			->table('exercice')
-			->where('id', $id)
+			->table('exercice e')
+			->select('e.*, j.idProgramme')  // On a besoin de l'idProgramme
+			->join('jointure j', 'j.idExercice = e.id', 'left')  // Left join au cas où
+			->where('e.id', $id)
 			->get()
 			->getRowArray();
 	}
@@ -107,32 +96,18 @@ class Donnees extends Model
 
 	public function getSimpleSeance($idSeance)
 	{
-		return $this
-			->db
-			->table('seances')
-			->where('id', $idSeance)
-			->get()
-			->getRowArray();
+		return $this->db->table('seances')->where('id', $idSeance)->get()->getRowArray();
 	}
 
 	public function getPerformancesRealisees($idSeance)
 	{
-		$query = $this
-			->db
-			->table('performances')
-			->where('idSeance', $idSeance)
-			->get()
-			->getResultArray();
-
+		$query = $this->db->table('performances')->where('idSeance', $idSeance)->get()->getResultArray();
 		$perfsOrdonnees = [];
-
 		foreach ($query as $row) {
 			$perfsOrdonnees[$row['idExercice']][$row['numero_serie']] = [
-				'reps' => $row['reps'],
-				'poids' => $row['poids_effectif']
+				'reps' => $row['reps'], 'poids' => $row['poids_effectif']
 			];
 		}
-
 		return $perfsOrdonnees;
 	}
 }

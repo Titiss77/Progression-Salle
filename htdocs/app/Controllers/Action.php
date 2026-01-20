@@ -19,13 +19,9 @@ class Action extends BaseController
             $newId = $this->actionInDB->setSeanceVide($idProgramme);
 
             if ($newId) {
-                return redirect()
-                    ->to('seance/creation/' . $newId)
-                    ->with('succes', 'Séance créée avec succès.');
+                return redirect()->to('seance/creation/' . $newId)->with('succes', 'Séance créée avec succès.');
             } else {
-                return redirect()
-                    ->back()
-                    ->with('erreur', 'Impossible de créer la séance.');
+                return redirect()->back()->with('erreur', 'Impossible de créer la séance.');
             }
         } else {
             return redirect()->to('seance/modification/' . $idProgramme);
@@ -55,6 +51,7 @@ class Action extends BaseController
         $data = [
             'titrePage' => 'Modifier le modèle',
             'programme' => $this->donneesModel->getUnProgramme($idProgramme),
+            // Utilise désormais la jointure via le Modèle
             'exercices' => $this->donneesModel->getExercicesParProgramme($idProgramme),
         ];
 
@@ -90,19 +87,13 @@ class Action extends BaseController
 
         if (!empty($donneesAInserer)) {
             $this->actionInDB->nettoyerPerformances($idSeance);
-
             $this->actionInDB->ajouterPerformances($donneesAInserer);
-
             $this->actionInDB->updateStatusSeance($idSeance, $nouveauStatut);
 
             if ($nouveauStatut === 'en_cours') {
-                return redirect()
-                    ->back()
-                    ->with('succes', 'Brouillon sauvegardé. Vous pouvez continuer.');
+                return redirect()->back()->with('succes', 'Brouillon sauvegardé.');
             } else {
-                return redirect()
-                    ->to('historique')
-                    ->with('succes', 'Séance terminée et validée !');
+                return redirect()->to('historique')->with('succes', 'Séance terminée !');
             }
         } else {
             return redirect()->back()->with('erreur', 'Aucune performance saisie.');
@@ -122,6 +113,7 @@ class Action extends BaseController
     public function modifierExercice($idExercice)
     {
         helper('form');
+        // IMPORTANT : getUnExercice doit faire le JOIN pour récupérer 'idProgramme'
         $exercice = $this->donneesModel->getUnExercice($idExercice);
 
         $data = [
@@ -139,17 +131,18 @@ class Action extends BaseController
 
         $data = [
             'id' => $id,
-            'idProgramme' => $idProgramme,
+            'idProgramme' => $idProgramme, // Sera utilisé pour la jointure
             'libelle' => $this->request->getPost('libelle'),
             'nbSeries' => $this->request->getPost('nbSeries'),
             'charge' => $this->request->getPost('charge'),
         ];
 
+        // Le modèle gère maintenant l'insertion dans 'jointure'
         $this->actionInDB->saveExercice($data);
 
         return redirect()
             ->to('seance/modification/' . $idProgramme)
-            ->with('succes', 'Exercice enregistré avec succès.');
+            ->with('succes', 'Exercice enregistré.');
     }
 
     public function supprimerExercice($idExercice)
@@ -166,6 +159,7 @@ class Action extends BaseController
 
     public function monterExercice($idExercice)
     {
+        // Le modèle gère le tri en tenant compte du programme via la jointure
         $this->actionInDB->changerOrdre($idExercice, 'monter');
 
         $ex = $this->donneesModel->getUnExercice($idExercice);
@@ -180,25 +174,17 @@ class Action extends BaseController
         return redirect()->to('seance/modification/' . $ex['idProgramme']);
     }
 
-    // Dans App\Controllers\Action.php
-
-    /**
-     * Affiche la page de gestion des programmes
-     */
     public function administrerProgramme()
     {
         helper('form');
         $data = [
-            'cssPage' => 'choix.css',  // On réutilise le style des cartes
+            'cssPage' => 'choix.css',
             'titrePage' => 'Gestion des programmes',
-            'programmes' => $this->donneesModel->getLesProgrammes(),  // Assure-toi d'avoir cette méthode
+            'programmes' => $this->donneesModel->getLesProgrammes(),
         ];
         return view('v_admin_programmes', $data);
     }
 
-    /**
-     * Traite le formulaire d'ajout ou de renommage
-     */
     public function sauvegarderProgramme()
     {
         $id = $this->request->getPost('id');
@@ -209,31 +195,20 @@ class Action extends BaseController
                 'id' => $id,
                 'libelle' => $libelle
             ]);
-            return redirect()->to('categorie/administrer')->with('succes', 'Le programme a été mis à jour.');
+            return redirect()->to('categorie/administrer')->with('succes', 'Programme mis à jour.');
         }
-
-        return redirect()->back()->with('erreur', 'Le nom du programme ne peut pas être vide.');
+        return redirect()->back()->with('erreur', 'Nom vide.');
     }
 
-    /**
-     * Supprime un programme après confirmation
-     */
     public function supprimerProgramme($id)
     {
-        try {
-            $this->actionInDB->deleteProgramme($id);
-            return redirect()->to('categorie/administrer')->with('succes', 'Programme supprimé avec succès.');
-        } catch (\Exception $e) {
-            // Si des exercices sont liés, la suppression SQL échouera proprement ici
-            return redirect()->to('categorie/administrer')->with('erreur', 'Impossible de supprimer ce programme car il contient des exercices.');
-        }
+        $this->actionInDB->deleteProgramme($id);
+        return redirect()->to('categorie/administrer')->with('succes', 'Programme supprimé.');
     }
 
     public function supprimerSeance($idSeance)
     {
         $this->actionInDB->deleteSeance($idSeance);
-
-        // On redirige vers l'historique ou l'accueil avec un message de confirmation
-        return redirect()->to('historique')->with('succes', 'La séance a été supprimée avec succès.');
+        return redirect()->to('historique')->with('succes', 'Séance supprimée.');
     }
 }
