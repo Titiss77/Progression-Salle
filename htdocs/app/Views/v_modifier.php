@@ -46,7 +46,7 @@
                         </a>
                     </div>
 
-                    <a href="<?= site_url('exercice/modifier/' . $ex['id']) ?>"
+                    <a href="<?= site_url('exercice/modifier/' . $ex['id'] . '/' . $programme['id']) ?>"
                         class="btn btn-sm btn-warning text-white ms-2">
                         <i class="bi bi-pencil-square"></i>
                     </a>

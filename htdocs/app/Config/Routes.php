@@ -19,8 +19,7 @@ $routes->get('seance/modification/(:num)', 'Action::modification/$1');
 $routes->post('seance/enregistrer', 'Action::enregistrer');
 
 $routes->get('exercice/ajouter/(:num)', 'Action::ajouterExercice/$1');
-
-$routes->get('exercice/modifier/(:num)', 'Action::modifierExercice/$1');
+$routes->get('exercice/modifier/(:num)/(:num)', 'Action::modifierExercice/$1/$2');
 
 $routes->post('exercice/sauvegarder', 'Action::sauvegarderExercice');
 

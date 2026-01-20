@@ -112,17 +112,22 @@ class Action extends BaseController
         return view('v_exercice_saisie', $data);
     }
 
-    public function modifierExercice($idExercice)
+    public function modifierExercice($idExercice, $idProgramme)
     {
         helper('form');
-        // IMPORTANT : getUnExercice doit faire le JOIN pour récupérer 'idProgramme'
+        
+        // On récupère les infos de l'exercice
         $exercice = $this->donneesModel->getUnExercice($idExercice);
 
         $data = [
-            'titrePage' => "Modifier l'exercice",
-            'idProgramme' => $exercice['idProgramme'],
-            'exercice' => $exercice
+            'titrePage'   => "Modifier l'exercice",
+            // IMPORTANT : On utilise l'ID passé dans l'URL, pas celui de la base de données
+            'idProgramme' => $idProgramme, 
+            'exercice'    => $exercice,
+            // On garde la liste pour éviter les erreurs, même si pas utilisée en modif
+            'listeExercices' => $this->donneesModel->getTousLesExercices(),
         ];
+        
         return view('v_exercice_saisie', $data);
     }
 
