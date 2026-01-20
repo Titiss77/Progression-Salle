@@ -16,8 +16,7 @@ class App extends BaseConfig
      *
      * E.g., http://example.com/
      */
-    //public string $baseURL = 'https://progression.22web.org/';
-    public string $baseURL = 'http://perso.local';
+    public string $baseURL = '';
 
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.
