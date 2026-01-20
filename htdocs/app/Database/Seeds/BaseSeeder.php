@@ -8,11 +8,14 @@ class BaseSeeder extends Seeder
 {
     public function run()
     {
+        // 1. Désactiver les vérifications de clés étrangères pour vider les tables proprement
         $this->db->disableForeignKeyChecks();
+        $this->db->table('jointure')->truncate();  // Table enfant (liaison)
         $this->db->table('exercice')->truncate();
         $this->db->table('programme')->truncate();
         $this->db->enableForeignKeyChecks();
 
+        // Données initiales
         $donnees = [
             'Upper' => [
                 ['libelle' => 'Développé couché', 'charge' => 65, 'nbSeries' => 3, 'ordre' => '1'],
@@ -37,22 +40,43 @@ class BaseSeeder extends Seeder
         ];
 
         foreach ($donnees as $nomProgramme => $exercices) {
+            // 2. Création du programme
             $this->db->table('programme')->insert([
                 'libelle' => $nomProgramme,
+                'estActif' => 1
             ]);
-
             $idProgramme = $this->db->insertID();
 
             foreach ($exercices as $exo) {
-                $dataExercice = [
+                // 3. Vérifier si l'exercice existe déjà (par libellé)
+                $existingExo = $this
+                    ->db
+                    ->table('exercice')
+                    ->where('libelle', $exo['libelle'])
+                    ->get()
+                    ->getRowArray();
+
+                if ($existingExo) {
+                    // S'il existe, on récupère son ID
+                    $idExercice = $existingExo['id'];
+                } else {
+                    // Sinon, on le crée
+                    $dataExercice = [
+                        'libelle' => $exo['libelle'],
+                        'charge' => $exo['charge'],
+                        'nbSeries' => $exo['nbSeries'],
+                        'ordre' => $exo['ordre'],
+                        'estActif' => 1
+                    ];
+                    $this->db->table('exercice')->insert($dataExercice);
+                    $idExercice = $this->db->insertID();
+                }
+
+                // 4. Créer le lien dans la table de jointure
+                $this->db->table('jointure')->insert([
                     'idProgramme' => $idProgramme,
-                    'libelle'     => $exo['libelle'],
-                    'charge'      => $exo['charge'],
-                    'nbSeries'    => $exo['nbSeries'],
-                    'ordre'       => $exo['ordre'],
-                ];
-                
-                $this->db->table('exercice')->insert($dataExercice);
+                    'idExercice' => $idExercice
+                ]);
             }
         }
     }
