@@ -1,4 +1,3 @@
-app/Config/HApp.php
-app/Config/HDatabase.php
-/writable/debugbar
+app/Config/App.php
+app/Config/Database.php
 .env
